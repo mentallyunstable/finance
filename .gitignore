@@ -1,0 +1,47 @@
+
+# macOS and editor files
+.DS_Store
+*.swp
+*.swo
+*.tmp
+*.log
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Optional local editor settings
+# .vscode/
+
+# Dart and Flutter generated files
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub/
+.pub-cache/
+**/doc/api/
+**/build/
+**/coverage/
+
+# Flutter platform build outputs
+**/ios/Flutter/.last_build_id
+**/android/app/debug/
+**/android/app/profile/
+**/android/app/release/
+
+# FVM
+.fvm/flutter_sdk
+.fvm/versions/
+
+# Generated or local migration/build state
+migrate_working_dir/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+
+# Package lockfiles for reusable packages
+packages/*/pubspec.lock

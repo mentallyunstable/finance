@@ -1,0 +1,15 @@
+name: finance
+publish_to: none
+environment:
+  sdk: ^3.11.3
+
+dev_dependencies:
+  melos: ^7.4.1
+
+workspace:
+  - apps/finance_app
+  - packages/core
+  - packages/design_system
+
+melos:
+  sdkPath: .fvm/flutter_sdk
