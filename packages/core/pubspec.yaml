@@ -1,6 +1,7 @@
 name: core
 description: "A new Flutter package project."
 version: 0.0.1
+publish_to: none
 homepage:
 
 environment:
@@ -12,6 +13,19 @@ resolution: workspace
 dependencies:
   flutter:
     sdk: flutter
+
+  design_system:
+    path: ../design_system
+
+  dio: ^5.9.2
+  flutter_bloc: ^9.1.1
+  flutter_secure_storage: ^10.0.0
+  fluttertoast: ^9.0.0
+  mask_text_input_formatter: ^2.9.0
+  permission_handler: ^12.0.1
+  pretty_dio_logger: ^1.4.0
+  shared_preferences: 2.5.3
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:

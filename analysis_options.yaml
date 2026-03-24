@@ -1,0 +1,86 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    avoid_print: true
+    prefer_single_quotes: true
+    avoid_relative_lib_imports: true
+    always_declare_return_types: true
+    camel_case_types: true
+    cancel_subscriptions: true
+    close_sinks: true
+    comment_references: false
+    constant_identifier_names: true
+    control_flow_in_finally: true
+    directives_ordering: true
+    empty_catches: true
+    empty_constructor_bodies: true
+    empty_statements: true
+    prefer_const_constructors: true
+    prefer_const_declarations: true
+    prefer_final_fields: true
+    prefer_final_in_for_each: true
+    prefer_final_locals: true
+    annotate_overrides: true
+    unawaited_futures: true
+    avoid_slow_async_io: true
+    avoid_type_to_string: true
+    always_use_package_imports: true
+
+  # Additional information about this file can be found at
+  # https://dart.dev/guides/language/analysis-options
+formatter:
+  page_width: 120
+  trailing_commas: preserve
+
+analyzer:
+  exclude:
+    - '**/*.g.dart'
+    - 'test/'
+    - 'test/*'
+    - '**/test/**/*.sh'
+    - '**/test/**/*.bash'
+    - '**/test/**/*.zsh'
+    - '**/test/**/*.command'
+    - '**/test/**/*.py'
+    - '**/test/**/*.js'
+    - '**/test/**/*.ts'
+    - '**/test/**/*.rb'
+
+dart_code_metrics:
+  metrics:
+    cyclomatic-complexity: 20
+    number-of-parameters: 4
+    maximum-nesting-level: 5
+  exclude:
+    metrics:
+      - lib/**/*.g.dart
+  rules:
+    - avoid-dynamic
+    - avoid-passing-async-when-sync-expected
+    - avoid-redundant-async
+    - avoid-unnecessary-type-assertions
+    - avoid-unnecessary-type-casts
+    - avoid-unrelated-type-assertions
+    - avoid-unused-parameters
+    - avoid-nested-conditional-expressions
+    - newline-before-return
+    - no-boolean-literal-compare
+    - no-empty-block
+    - prefer-trailing-comma
+    - prefer-conditional-expressions
+    - no-equal-then-else
+    - prefer-moving-to-variable
+    - prefer-match-file-name
+    - avoid-collapsible-if
+    - avoid-redundant-else
+    - avoid-incomplete-copy-with
+    - avoid-self-compare
+    - avoid-self-assignment
+    - avoid-unnecessary-nullable-return-type
+    - avoid-unrelated-type-casts
+    - prefer-declaring-const-constructor
+    - prefer-enums-by-name
+    - avoid-unused-instances
+    - avoid-excessive-expressions
+    - avoid-unused-generics
