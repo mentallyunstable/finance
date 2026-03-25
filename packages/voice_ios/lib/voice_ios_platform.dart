@@ -5,8 +5,8 @@ class VoiceIosPlatform extends VoicePlatform {
   static const _methodChannelName = 'voice_method_channel_ios';
   static const _eventChannelName = 'voice_event_channel_ios';
 
-  final _channel = MethodChannel(_methodChannelName);
-  final _eventChannel = EventChannel(_eventChannelName);
+  final _channel = const MethodChannel(_methodChannelName);
+  final _eventChannel = const EventChannel(_eventChannelName);
 
   @override
   Future<void> startListening() async {
@@ -16,7 +16,7 @@ class VoiceIosPlatform extends VoicePlatform {
       if (event is String) {
         return event;
       } else {
-        throw FormatException('Expected a string from event channel');
+        throw const FormatException('Expected a string from event channel');
       }
     });
   }

@@ -1,9 +1,10 @@
-import 'package:core/app/widget/app_bloc_provider.dart';
-import 'package:core/initialization/model/initialization_result.dart';
-import 'package:core/initialization/widget/dependencies_scope.dart';
-import 'package:finance_app/app/material_context.dart';
+import 'package:finance_app/app/initialization/model/initialization_result.dart';
+import 'package:finance_app/app/initialization/widget/dependencies_scope.dart';
+import 'package:finance_app/app/widget/app_bloc_provider.dart';
+import 'package:finance_app/app/widget/material_context.dart';
 import 'package:flutter/material.dart';
 
+/// {@template app_widget}
 /// [AppWidget] is an entry point to the application.
 ///
 /// If a scope doesn't depend on any inherited widget returned by
@@ -11,7 +12,7 @@ import 'package:flutter/material.dart';
 /// and it should be available in the whole application, it can be
 /// placed here.
 /// {@endtemplate}
-class AppWidget extends StatelessWidget {
+final class AppWidget extends StatelessWidget {
   /// {@macro app}
   const AppWidget({required this.result, super.key});
 

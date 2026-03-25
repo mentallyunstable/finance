@@ -1,16 +1,16 @@
-// ignore_for_file: depend_on_referenced_packages
 import 'dart:async';
 
-import 'package:core/app/widget/app_widget.dart';
 import 'package:core/constant/app_config.dart';
-import 'package:core/initialization/logic/initialization_processor.dart';
-import 'package:core/initialization/widget/initialization_failed_app.dart';
 import 'package:core/utils/app_bloc_observer.dart';
 import 'package:core/utils/logger.dart';
+import 'package:finance_app/app/initialization/logic/initialization_processor.dart';
+import 'package:finance_app/app/initialization/widget/initialization_failed_app.dart';
+import 'package:finance_app/app/widget/app_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+/// {@template app_runner}
 /// A class which is responsible for initialization and running the app.
 /// {@endtemplate}
 final class AppRunner {

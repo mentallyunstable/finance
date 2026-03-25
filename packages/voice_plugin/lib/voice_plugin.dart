@@ -6,8 +6,7 @@ import 'dart:io';
 import 'package:voice_android/voice_android_platform.dart';
 import 'package:voice_ios/voice_ios_platform.dart';
 import 'package:voice_platform_interface/voice_platform_interface.dart';
-
-import 'voice_service.dart';
+import 'package:voice_plugin/voice_service.dart';
 
 class VoicePlugin {
   VoicePlugin._internal();

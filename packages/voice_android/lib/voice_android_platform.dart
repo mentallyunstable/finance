@@ -4,7 +4,7 @@ import 'package:voice_platform_interface/voice_platform_interface.dart';
 class VoiceAndroidPlatform extends VoicePlatform {
   static const _methodChannelName = 'voice_method_channel_android';
 
-  final _channel = MethodChannel(_methodChannelName);
+  final _channel = const MethodChannel(_methodChannelName);
 
   @override
   Future<void> startListening() async {

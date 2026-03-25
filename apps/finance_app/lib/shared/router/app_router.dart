@@ -1,5 +1,5 @@
 import 'package:finance_app/app/home/home_screen.dart';
-import 'package:finance_app/app/main/main_screen.dart';
+import 'package:finance_app/app/widget/app_shell.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
@@ -18,21 +18,48 @@ final class AppRouter {
 
   /// Creates [GoRouter] instance for app navigation.
   late final router = GoRouter(
-    initialLocation: AppRouterPaths.main.path,
+    initialLocation: AppRouterPaths.home.path,
     navigatorKey: rootNavigatorKey,
     debugLogDiagnostics: kDebugMode,
     routes: [
       // Nested stack navigation using multiple [StatefulShellBranch].
       StatefulShellRoute.indexedStack(
-        builder: (context, state, child) => HomeScreen(shell: child),
+        builder: (context, state, child) => AppShell(shell: child),
         parentNavigatorKey: rootNavigatorKey,
         branches: [
           StatefulShellBranch(
             routes: [
               GoRoute(
-                name: AppRouterPaths.main.name,
-                path: AppRouterPaths.main.path,
-                builder: (context, state) => const MainScreen(),
+                name: AppRouterPaths.home.name,
+                path: AppRouterPaths.home.path,
+                builder: (context, state) => const HomeScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                name: AppRouterPaths.history.name,
+                path: AppRouterPaths.history.path,
+                builder: (context, state) => const HomeScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                name: AppRouterPaths.budgets.name,
+                path: AppRouterPaths.budgets.path,
+                builder: (context, state) => const HomeScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                name: AppRouterPaths.settings.name,
+                path: AppRouterPaths.settings.path,
+                builder: (context, state) => const HomeScreen(),
               ),
             ],
           ),

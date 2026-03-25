@@ -1,4 +1,4 @@
-import 'package:core/utils/extensions/context_extension.dart';
+import 'package:finance_app/app/dependencies/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 
 final class AppBlocProvider extends StatelessWidget {

@@ -271,7 +271,7 @@ packages:
     source: path
     version: "0.0.1"
   voice_platform_interface:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       path: "../../voice_platform_interface"
       relative: true

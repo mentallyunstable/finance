@@ -1,5 +1,5 @@
-import 'package:core/app/dependencies/model/remote_data_source_dependencies.dart';
 import 'package:dio/dio.dart';
+import 'package:finance_app/app/dependencies/model/remote_data_source_dependencies.dart';
 
 /// Defines [RemoteDataSourceDependencies] instance initialization.
 abstract class RemoteDataSourceInitializer {

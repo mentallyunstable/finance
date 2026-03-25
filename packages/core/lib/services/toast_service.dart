@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 final class ToastService {
   final FToast fToast;
 
-  const ToastService({required this.fToast});
+  ToastService() : fToast = FToast();
 
   void showToast({
     required final BuildContext context,

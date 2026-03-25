@@ -1,7 +1,7 @@
-import 'package:core/app/dependencies/model/dependencies_container.dart';
-import 'package:core/app/dependencies/model/repository_dependencies.dart';
-import 'package:core/app/dependencies/model/service_dependencies.dart';
-import 'package:core/initialization/widget/dependencies_scope.dart';
+import 'package:finance_app/app/dependencies/model/dependencies_container.dart';
+import 'package:finance_app/app/dependencies/model/repository_dependencies.dart';
+import 'package:finance_app/app/dependencies/model/service_dependencies.dart';
+import 'package:finance_app/app/initialization/widget/dependencies_scope.dart';
 import 'package:flutter/material.dart';
 
 /// List of extensions for [BuildContext]

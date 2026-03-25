@@ -12,7 +12,7 @@ abstract class VoicePlatform extends PlatformInterface {
 
   static VoicePlatform get instance => _instance;
 
-  static set instance(VoicePlatform instance) {
+  static set instance(final VoicePlatform instance) {
     PlatformInterface.verify(instance, _token);
     _instance = instance;
   }

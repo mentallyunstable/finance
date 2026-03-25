@@ -7,7 +7,12 @@ sealed class AppRouterPaths {
   static const initial = AppRouteEntry(path: '/', name: 'initial');
 
   // Branches
-  static const main = AppRouteEntry(path: '/main', name: 'main');
+  static const home = AppRouteEntry(path: '/home', name: 'home');
+  static const history = AppRouteEntry(path: '/history', name: 'history');
+  static const budgets = AppRouteEntry(path: '/budgets', name: 'budgets');
+  static const settings = AppRouteEntry(path: '/settings', name: 'settings');
+
+  // Screens
 }
 
 /// Describes individual route entity with [path] and [name].

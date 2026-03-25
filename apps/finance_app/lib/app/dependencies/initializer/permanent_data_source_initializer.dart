@@ -1,4 +1,4 @@
-import 'package:core/app/dependencies/model/permanent_data_source_dependencies.dart';
+import 'package:finance_app/app/dependencies/model/permanent_data_source_dependencies.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

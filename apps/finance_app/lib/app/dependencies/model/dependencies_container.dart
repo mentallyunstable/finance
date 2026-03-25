@@ -1,8 +1,8 @@
-import 'package:core/app/dependencies/model/permanent_data_source_dependencies.dart';
-import 'package:core/app/dependencies/model/remote_data_source_dependencies.dart';
-import 'package:core/app/dependencies/model/repository_dependencies.dart';
-import 'package:core/app/dependencies/model/service_dependencies.dart';
 import 'package:core/constant/app_config.dart';
+import 'package:finance_app/app/dependencies/model/permanent_data_source_dependencies.dart';
+import 'package:finance_app/app/dependencies/model/remote_data_source_dependencies.dart';
+import 'package:finance_app/app/dependencies/model/repository_dependencies.dart';
+import 'package:finance_app/app/dependencies/model/service_dependencies.dart';
 import 'package:flutter/material.dart' show GlobalKey, NavigatorState;
 
 abstract base class DependenciesContainer {

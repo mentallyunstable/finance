@@ -1,5 +1,5 @@
-import 'package:core/utils/extensions/context_extension.dart';
 import 'package:design_system/design_system.dart';
+import 'package:finance_app/app/dependencies/extensions/context_extension.dart';
 import 'package:finance_app/shared/router/app_router.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 ///
 /// This widget sets locales, themes and routing.
 /// {@endtemplate}
-class MaterialContext extends StatelessWidget {
+final class MaterialContext extends StatelessWidget {
   /// {@macro material_context}
   const MaterialContext({super.key});
 

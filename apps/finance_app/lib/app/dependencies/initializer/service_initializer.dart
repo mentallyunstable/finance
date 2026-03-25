@@ -1,13 +1,12 @@
-import 'package:core/app/dependencies/model/service_dependencies.dart';
 import 'package:core/constant/app_config.dart';
 import 'package:core/services/modal_sheet_service.dart';
 import 'package:core/services/permission_service.dart';
 import 'package:core/services/toast_service.dart';
 import 'package:core/services/url_launcher_service.dart';
 import 'package:dio/dio.dart';
+import 'package:finance_app/app/dependencies/model/service_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -55,7 +54,7 @@ final class ServiceInitializerImpl extends ServiceInitializer {
 
     const permissionService = PermissionService();
 
-    final toastService = ToastService(fToast: FToast());
+    final toastService = ToastService();
 
     const modalSheetService = ModalSheetService();
 

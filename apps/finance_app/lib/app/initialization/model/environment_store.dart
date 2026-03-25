@@ -1,4 +1,4 @@
-import 'package:core/initialization/model/environment.dart';
+import 'package:finance_app/app/initialization/model/environment.dart';
 
 /// Defines build-time environment variables data.
 abstract base class EnvironmentStore {

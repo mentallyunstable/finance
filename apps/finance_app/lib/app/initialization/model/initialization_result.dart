@@ -1,4 +1,4 @@
-import 'package:core/app/dependencies/model/dependencies_container.dart';
+import 'package:finance_app/app/dependencies/model/dependencies_container.dart';
 
 final class InitializationResult {
   final DependenciesContainer dependencies;
