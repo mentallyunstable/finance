@@ -4,6 +4,8 @@ version: 0.0.1
 publish_to: none
 homepage:
 
+resolution: workspace
+
 environment:
   sdk: ^3.11.3
   flutter: ">=1.17.0"
@@ -12,12 +14,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  voice_platform_interface:
-    path: ../voice_platform_interface
-  voice_android:
-    path: ../voice_android
-  voice_ios:
-    path: ../voice_ios
+  voice_platform_interface: any
+  voice_android: any
+  voice_ios: any
 
 dev_dependencies:
   flutter_test:

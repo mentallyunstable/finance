@@ -3,7 +3,9 @@ import 'package:finance_app/app/widget/app_shell.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:voice_recognition_feature/voice_recognition.dart';
 
+part 'app_router_extensions.dart';
 part 'app_router_paths.dart';
 
 /// Defines app navigation service using go_router package.
@@ -64,6 +66,11 @@ final class AppRouter {
             ],
           ),
         ],
+      ),
+      GoRoute(
+        path: AppRouterPaths.voiceRecognition.path,
+        name: AppRouterPaths.voiceRecognition.name,
+        builder: (context, state) => const VoiceRecognitionScreen(),
       ),
     ],
   );

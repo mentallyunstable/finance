@@ -10,6 +10,11 @@ workspace:
   - apps/finance_app
   - packages/core
   - packages/design_system
+  - packages/voice_android
+  - packages/voice_ios
+  - packages/voice_platform_interface
+  - packages/voice_plugin
+  - packages/voice_recognition_feature
 
 melos:
   name: finance
@@ -17,8 +22,8 @@ melos:
   sdkPath: .fvm/flutter_sdk
 
   packages:
-    - apps/**
-    - packages/**
+    - apps/*
+    - packages/*
 
   command:
     bootstrap:

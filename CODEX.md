@@ -105,6 +105,13 @@ decisions over generic Flutter advice.
 - Add comments only where intent is not obvious from the code.
 - Use meaningful names; avoid unnecessary abbreviations.
 - Prefer modern Dart language features when they improve clarity.
+- Do no pass any context or widget references into non-UI code; use callbacks or other patterns
+  instead.
+- Avoid global state and singletons; prefer dependency injection or local state.
+- Use `const` constructors and widgets where possible for performance benefits.
+- Follow existing patterns in the codebase for state management, navigation, and
+  dependency injection rather than introducing new approaches without a clear need.
+- Do not pass any extent data and objects to constructors or methods.
 
 ## Architecture Guidance
 

@@ -1,4 +1,4 @@
-import 'package:finance_app/app/initialization/model/environment_store.dart';
+import 'package:core/domain/environment_store.dart';
 
 /// Defines app configuration options.
 final class AppConfig {

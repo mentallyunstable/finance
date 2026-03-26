@@ -7,5 +7,11 @@ class PermissionService {
 
   Future<PermissionStatus> requestCameraPermission() async => await Permission.camera.request();
 
+  Future<PermissionStatus> locationPermissionStatus() async => await Permission.location.status;
+
   Future<PermissionStatus> requestLocationPermission() async => await Permission.location.request();
+
+  Future<PermissionStatus> microphonePermissionStatus() async => await Permission.microphone.status;
+
+  Future<PermissionStatus> requestMicrophonePermission() async => await Permission.microphone.request();
 }

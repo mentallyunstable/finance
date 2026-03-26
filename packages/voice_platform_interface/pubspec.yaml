@@ -4,6 +4,8 @@ version: 0.0.1
 publish_to: none
 homepage:
 
+resolution: workspace
+
 environment:
   sdk: ^3.11.3
   flutter: ">=1.17.0"

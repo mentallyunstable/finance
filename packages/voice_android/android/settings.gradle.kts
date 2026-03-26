@@ -1,1 +1,10 @@
-rootProject.name = 'voice_android'
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+
+rootProject.name = "voice_android"

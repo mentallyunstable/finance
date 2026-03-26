@@ -6,7 +6,6 @@ import 'dart:io';
 import 'package:voice_android/voice_android_platform.dart';
 import 'package:voice_ios/voice_ios_platform.dart';
 import 'package:voice_platform_interface/voice_platform_interface.dart';
-import 'package:voice_plugin/voice_service.dart';
 
 class VoicePlugin {
   VoicePlugin._internal();
@@ -15,8 +14,6 @@ class VoicePlugin {
 
   factory VoicePlugin() => _instance;
 
-  late final VoiceService _service = VoiceService();
-
   /// Initialize plugin (permissions, setup, etc.)
   void initialize() {
     if (Platform.isAndroid) {
@@ -24,6 +21,10 @@ class VoicePlugin {
     } else {
       VoicePlatform.instance = VoiceIosPlatform();
     }
+  }
+
+  Future<bool> checkAvailability() async {
+    return VoicePlatform.instance.checkAvailability();
   }
 
   /// Start voice recognition
@@ -36,12 +37,12 @@ class VoicePlugin {
     return VoicePlatform.instance.stopListening();
   }
 
-  // /// Raw recognized text stream
-  // Stream<String> get rawTextStream => VoicePlatform.instance.onResult.map((e) => e.text);
-  //
-  // /// Errors from platform layer
-  // Stream<Object> get errors => VoicePlatform.instance.onError;
-  //
+  /// Raw recognized text stream
+  Stream<VoiceRecognitionSuccess> get rawTextStream => VoicePlatform.instance.results;
+
+  /// Errors from platform layer
+  Stream<VoiceRecognitionError> get errors => VoicePlatform.instance.errors;
+
   // /// High-level API (recommended)
   // VoiceService get service => _service;
 }

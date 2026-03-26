@@ -13,6 +13,7 @@ sealed class AppRouterPaths {
   static const settings = AppRouteEntry(path: '/settings', name: 'settings');
 
   // Screens
+  static const voiceRecognition = AppRouteEntry(path: '/voice-recognition', name: 'voice-recognition');
 }
 
 /// Describes individual route entity with [path] and [name].

@@ -3,12 +3,14 @@ import 'package:finance_app/app/dependencies/model/permanent_data_source_depende
 import 'package:finance_app/app/dependencies/model/remote_data_source_dependencies.dart';
 import 'package:finance_app/app/dependencies/model/repository_dependencies.dart';
 import 'package:finance_app/app/dependencies/model/service_dependencies.dart';
+import 'package:finance_app/shared/router/app_router.dart';
 import 'package:flutter/material.dart' show GlobalKey, NavigatorState;
 
 abstract base class DependenciesContainer {
   const DependenciesContainer({
     required this.config,
     required this.navigatorKey,
+    required this.router,
     required this.permanentDataSources,
     required this.remoteDataSources,
     required this.repositories,
@@ -20,6 +22,9 @@ abstract base class DependenciesContainer {
 
   /// Global navigator key for the app.
   final GlobalKey<NavigatorState> navigatorKey;
+
+  /// App router for navigation.
+  final AppRouter router;
 
   /// Dependencies for permanent data sources.
   final PermanentDataSourceDependencies permanentDataSources;
@@ -39,6 +44,7 @@ final class DependenciesContainerImpl extends DependenciesContainer {
   const DependenciesContainerImpl({
     required super.config,
     required super.navigatorKey,
+    required super.router,
     required super.permanentDataSources,
     required super.remoteDataSources,
     required super.repositories,

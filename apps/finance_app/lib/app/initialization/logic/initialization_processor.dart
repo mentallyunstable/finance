@@ -13,6 +13,7 @@ import 'package:finance_app/app/dependencies/model/remote_data_source_dependenci
 import 'package:finance_app/app/dependencies/model/repository_dependencies.dart';
 import 'package:finance_app/app/dependencies/model/service_dependencies.dart';
 import 'package:finance_app/app/initialization/model/initialization_result.dart';
+import 'package:finance_app/shared/router/app_router.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,6 +41,12 @@ final class InitializationProcessor implements IInitializationProcessor {
 
   Future<DependenciesContainer> _initDependencies() async {
     final rootNavigatorKey = GlobalKey<NavigatorState>();
+    final shellNavigatorKey = GlobalKey<NavigatorState>();
+
+    final router = AppRouter(
+      rootNavigatorKey: rootNavigatorKey,
+      shellNavigatorKey: shellNavigatorKey,
+    );
 
     final services = await _initServices(config: config, navigatorKey: rootNavigatorKey);
 
@@ -55,6 +62,7 @@ final class InitializationProcessor implements IInitializationProcessor {
     return DependenciesContainerImpl(
       config: config,
       navigatorKey: rootNavigatorKey,
+      router: router,
       services: services,
       permanentDataSources: permanentDataSources,
       remoteDataSources: remoteDataSources,

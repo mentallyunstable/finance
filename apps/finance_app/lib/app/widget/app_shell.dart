@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:finance_app/shared/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -43,7 +44,7 @@ final class AppShell extends StatelessWidget {
                 ],
               ),
               child: InkResponse(
-                onTap: () {},
+                onTap: () => _goToVoiceRecognition(context),
                 containedInkWell: true,
                 highlightShape: BoxShape.circle,
                 radius: 28,
@@ -67,6 +68,10 @@ final class AppShell extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _goToVoiceRecognition(final BuildContext context) {
+    GoRouter.of(context).pushVoiceRecognitionScreen();
   }
 }
 

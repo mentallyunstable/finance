@@ -4,6 +4,8 @@ version: 0.0.1
 publish_to: none
 homepage:
 
+resolution: workspace
+
 environment:
   sdk: ^3.11.3
   flutter: '>=3.3.0'
@@ -12,10 +14,10 @@ dependencies:
   flutter:
     sdk: flutter
 
-  voice_platform_interface:
-    path: ../voice_platform_interface
-
   plugin_platform_interface: ^2.0.2
+
+  core: any
+  voice_platform_interface: any
 
 dev_dependencies:
   flutter_test:
