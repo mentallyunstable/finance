@@ -17,7 +17,7 @@ final class VoiceRecognitionBlocProvider extends StatelessWidget {
       create: (_) => VoiceRecognitionBloc(
         voicePlugin: VoicePlugin()..initialize(),
         permissionService: context.dependencies.services.permissionService,
-      ),
+      )..add(const VoiceRecognitionBlocEvent.checkAvailability()),
       child: child,
     );
   }
