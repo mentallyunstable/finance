@@ -1,5 +1,5 @@
-import 'package:core/utils/extensions/map_extensions.dart';
 import 'package:flutter/services.dart';
+import 'package:voice_platform_interface/utils/extensions.dart';
 import 'package:voice_platform_interface/voice_platform_interface.dart';
 
 class VoiceAndroidPlatform extends VoicePlatform {
@@ -31,18 +31,7 @@ class VoiceAndroidPlatform extends VoicePlatform {
     );
   }
 
-  late final Stream<VoiceRecognitionResult> _events = _eventChannel
-      .receiveBroadcastStream()
-      .map((event) {
-        if (event is! Map) {
-          throw StateError('Expected map from EventChannel, got ${event.runtimeType}');
-        }
-
-        final normalized = event.normalize();
-
-        return VoiceRecognitionResult.fromString(normalized);
-      })
-      .asBroadcastStream();
+  late final Stream<VoiceRecognitionResult> _events = _eventChannel.receiveBroadcastStream().mapToResult();
 
   @override
   Future<void> stopListening() async {
@@ -50,14 +39,8 @@ class VoiceAndroidPlatform extends VoicePlatform {
   }
 
   @override
-  Stream<VoiceRecognitionSuccess> get results => _events
-      .where(
-        (event) => event.type == VoiceRecognitionResultType.full || event.type == VoiceRecognitionResultType.partial,
-      )
-      .map((event) => event as VoiceRecognitionSuccess);
+  Stream<VoiceRecognitionSuccess> get results => _events.mapToSuccess();
 
   @override
-  Stream<VoiceRecognitionError> get errors => _events
-      .where((event) => event.type == VoiceRecognitionResultType.error)
-      .map((data) => data as VoiceRecognitionError);
+  Stream<VoiceRecognitionError> get errors => _events.mapToError();
 }
