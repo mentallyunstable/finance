@@ -1,3 +1,4 @@
+import 'package:budgets_screen/view/screens/budgets_screen.dart';
 import 'package:finance_app/app/widget/app_shell.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -53,7 +54,7 @@ final class AppRouter {
               GoRoute(
                 name: AppRouterPaths.budgets.name,
                 path: AppRouterPaths.budgets.path,
-                builder: (context, state) => const HomeScreen(),
+                builder: (context, state) => const BudgetsScreen(),
               ),
             ],
           ),
