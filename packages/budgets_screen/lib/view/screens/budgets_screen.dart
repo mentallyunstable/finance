@@ -363,9 +363,7 @@ final class _MetricTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
-        color: highlighted
-            ? const Color(0xFFDDF7EB)
-            : AppColors.surfaceContainerLow,
+        color: highlighted ? const Color(0xFFDDF7EB) : AppColors.surfaceContainerLow,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -374,9 +372,7 @@ final class _MetricTile extends StatelessWidget {
           Text(
             label,
             style: textTheme.labelSmall?.copyWith(
-              color: highlighted
-                  ? const Color(0xFF00714D)
-                  : AppColors.onSurfaceVariant,
+              color: highlighted ? const Color(0xFF00714D) : AppColors.onSurfaceVariant,
               fontWeight: FontWeight.w500,
               letterSpacing: 0.6,
             ),
@@ -408,17 +404,13 @@ final class _BudgetCategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final stripe = category.dangerStripe
-        ? Border(left: BorderSide(color: category.accentColor, width: 4))
-        : null;
+    final stripe = category.dangerStripe ? Border(left: BorderSide(color: category.accentColor, width: 4)) : null;
 
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(24),
-        border: category.highlighted
-            ? Border.all(color: category.accentColor.withValues(alpha: 0.12))
-            : null,
+        border: category.highlighted ? Border.all(color: category.accentColor.withValues(alpha: 0.12)) : null,
         boxShadow: const [
           BoxShadow(
             color: Color(0x08191C1E),
@@ -470,12 +462,8 @@ final class _BudgetCategoryCard extends StatelessWidget {
                       Text(
                         category.subtitle,
                         style: textTheme.bodySmall?.copyWith(
-                          color: category.dangerStripe
-                              ? category.accentColor
-                              : colorScheme.onSurfaceVariant,
-                          fontWeight: category.dangerStripe
-                              ? FontWeight.w500
-                              : FontWeight.w400,
+                          color: category.dangerStripe ? category.accentColor : colorScheme.onSurfaceVariant,
+                          fontWeight: category.dangerStripe ? FontWeight.w500 : FontWeight.w400,
                         ),
                       ),
                     ],
