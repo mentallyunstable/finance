@@ -31,7 +31,7 @@ final class AppColors {
   static const Color surfaceBright = Color(0xFFFFFFFF);
   static const Color surfaceContainerLowest = Color(0xFFFFFFFF);
   static const Color surfaceContainerLow = Color(0xFFF2F4F6);
-  static const Color surfaceContainer = Color(0xFFECEEF0);
+  static const Color surfaceContainer = Color(0xFFFFFFFF);
   static const Color surfaceContainerHigh = Color(0xFFE0E3E5);
   static const Color surfaceContainerHighest = Color(0xFFD7DBDF);
   static const Color onSurfaceVariant = Color(0xFF434654);
@@ -45,7 +45,7 @@ final class AppColors {
   static const Color inversePrimary = Color(0xFF80AFFF);
   static const Color surfaceTint = primary;
 
-  static const Color success = Color(0xFF006C49);
+  static const Color success = Color(0xFF4EDEA3);
   static const Color successContainer = Color(0xFFD8F8EA);
   static const Color successAccent = Color(0xFF00714D);
   static const Color warning = Color(0xFFBA1A1A);

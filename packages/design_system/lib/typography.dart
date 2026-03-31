@@ -6,13 +6,13 @@ final class AppTypography {
   static const String fontFamily = 'Manrope';
 
   static final TextTheme englishLike = TextTheme(
-    displayLarge: _style(size: 57, height: 64, weight: FontWeight.w400),
-    displayMedium: _style(size: 45, height: 52, weight: FontWeight.w400),
-    displaySmall: _style(size: 36, height: 44, weight: FontWeight.w400),
-    headlineLarge: _style(size: 32, height: 40, weight: FontWeight.w400),
-    headlineMedium: _style(size: 28, height: 36, weight: FontWeight.w400),
-    headlineSmall: _style(size: 24, height: 32, weight: FontWeight.w400),
-    titleLarge: _style(size: 22, height: 28, weight: FontWeight.w400),
+    displayLarge: _style(size: 48, height: 64, weight: FontWeight.w800),
+    displayMedium: _style(size: 40, height: 48, weight: FontWeight.w700),
+    displaySmall: _style(size: 32, height: 44, weight: FontWeight.w600),
+    headlineLarge: _style(size: 28, height: 40, weight: FontWeight.w800),
+    headlineMedium: _style(size: 24, height: 36, weight: FontWeight.w700),
+    headlineSmall: _style(size: 22, height: 32, weight: FontWeight.w600),
+    titleLarge: _style(size: 22, height: 28, weight: FontWeight.w600),
     titleMedium: _style(
       size: 16,
       height: 24,
@@ -31,7 +31,7 @@ final class AppTypography {
     labelLarge: _style(
       size: 14,
       height: 20,
-      weight: FontWeight.w500,
+      weight: FontWeight.w700,
       letterSpacing: 0.1,
     ),
     labelMedium: _style(
