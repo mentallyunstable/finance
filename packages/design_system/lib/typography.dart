@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 final class AppTypography {
   AppTypography._();
 
-  static const String fontFamily = 'Roboto';
+  static const String fontFamily = 'Manrope';
 
   static final TextTheme englishLike = TextTheme(
     displayLarge: _style(size: 57, height: 64, weight: FontWeight.w400),
