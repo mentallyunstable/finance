@@ -19,6 +19,7 @@ final class AppTheme {
 
     return ThemeData(
       useMaterial3: true,
+      fontFamily: AppTypography.fontFamily,
       brightness: colorScheme.brightness,
       colorScheme: colorScheme,
       scaffoldBackgroundColor: colorScheme.surface,
@@ -63,6 +64,9 @@ final class AppTheme {
       bottomSheetTheme: _bottomSheetTheme(colorScheme),
       dialogTheme: _dialogTheme(colorScheme, textTheme),
       switchTheme: _switchTheme(colorScheme),
+      extensions: [
+        const AppColorsExtension(success: AppColors.success),
+      ],
     );
   }
 
@@ -79,8 +83,12 @@ final class AppTheme {
       scrolledUnderElevation: 1,
       backgroundColor: colorScheme.surface,
       foregroundColor: colorScheme.onSurface,
-      surfaceTintColor: colorScheme.surfaceTint,
-      titleTextStyle: textTheme.titleLarge?.copyWith(color: colorScheme.onSurface),
+      surfaceTintColor: colorScheme.surface,
+      titleTextStyle: textTheme.titleLarge?.copyWith(
+        fontSize: 18,
+        color: colorScheme.primary,
+        fontWeight: FontWeight.w800,
+      ),
     );
   }
 
@@ -486,5 +494,36 @@ final class AppTheme {
     return colorScheme.brightness == Brightness.dark
         ? AppColors.surfaceContainerLowDark
         : AppColors.surfaceContainerLowest;
+  }
+}
+
+class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
+  final Color? success;
+
+  const AppColorsExtension({
+    this.success,
+  });
+
+  @override
+  ThemeExtension<AppColorsExtension> copyWith({
+    final Color? success,
+  }) {
+    return AppColorsExtension(
+      success: success ?? this.success,
+    );
+  }
+
+  @override
+  ThemeExtension<AppColorsExtension> lerp(
+    covariant final ThemeExtension<AppColorsExtension>? other,
+    final double t,
+  ) {
+    if (other is! AppColorsExtension) {
+      return this;
+    }
+
+    return AppColorsExtension(
+      success: Color.lerp(success, other.success, t),
+    );
   }
 }
