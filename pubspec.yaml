@@ -11,6 +11,7 @@ workspace:
   - packages/core
   - packages/design_system
   - packages/home_screen
+  - packages/history_screen
   - packages/budgets_screen
   - packages/voice_android
   - packages/voice_ios

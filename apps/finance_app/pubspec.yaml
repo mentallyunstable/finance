@@ -39,6 +39,7 @@ dependencies:
   core: any
   design_system: any
   home_screen: any
+  history_screen: any
   budgets_screen: any
   voice_recognition_feature: any
   transaction_feature: any

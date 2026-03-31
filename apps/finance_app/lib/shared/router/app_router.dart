@@ -3,6 +3,7 @@ import 'package:finance_app/app/widget/app_shell.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:history_screen/view/screens/history_screen.dart';
 import 'package:home_screen/view/screens/home_screen.dart';
 import 'package:transaction_feature/view/screens/create_transaction_screen.dart';
 import 'package:voice_recognition_feature/voice_recognition.dart';
@@ -45,7 +46,7 @@ final class AppRouter {
               GoRoute(
                 name: AppRouterPaths.history.name,
                 path: AppRouterPaths.history.path,
-                builder: (context, state) => const HomeScreen(),
+                builder: (context, state) => const HistoryScreen(),
               ),
             ],
           ),
