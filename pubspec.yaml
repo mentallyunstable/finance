@@ -13,6 +13,7 @@ workspace:
   - packages/home_screen
   - packages/history_screen
   - packages/budgets_screen
+  - packages/settings_screen
   - packages/voice_android
   - packages/voice_ios
   - packages/voice_platform_interface

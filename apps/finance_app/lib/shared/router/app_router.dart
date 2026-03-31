@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:history_screen/view/screens/history_screen.dart';
 import 'package:home_screen/view/screens/home_screen.dart';
+import 'package:settings_screen/view/screens/settings_screen.dart';
 import 'package:transaction_feature/view/screens/create_transaction_screen.dart';
 import 'package:voice_recognition_feature/voice_recognition.dart';
 
@@ -64,7 +65,7 @@ final class AppRouter {
               GoRoute(
                 name: AppRouterPaths.settings.name,
                 path: AppRouterPaths.settings.path,
-                builder: (context, state) => const HomeScreen(),
+                builder: (context, state) => const SettingsScreen(),
               ),
             ],
           ),
