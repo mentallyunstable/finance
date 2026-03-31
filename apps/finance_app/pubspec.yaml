@@ -39,6 +39,7 @@ dependencies:
   core: any
   design_system: any
   voice_recognition_feature: any
+  transaction_feature: any
 
 dev_dependencies:
   flutter_test:

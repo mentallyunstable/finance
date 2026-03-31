@@ -14,6 +14,7 @@ sealed class AppRouterPaths {
 
   // Screens
   static const voiceRecognition = AppRouteEntry(path: '/voice-recognition', name: 'voice-recognition');
+  static const createTransaction = AppRouteEntry(path: '/create-transaction', name: 'create-transaction');
 }
 
 /// Describes individual route entity with [path] and [name].
