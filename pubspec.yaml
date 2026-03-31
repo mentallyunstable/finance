@@ -10,6 +10,7 @@ workspace:
   - apps/finance_app
   - packages/core
   - packages/design_system
+  - packages/home_screen
   - packages/voice_android
   - packages/voice_ios
   - packages/voice_platform_interface
