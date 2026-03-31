@@ -53,7 +53,7 @@ final class AppColors {
   static const Color info = Color(0xFF2563EB);
   static const Color infoContainer = Color(0xFFDCE8FF);
 
-  static const Color primaryDark = Color(0xFF95CCFF);
+  static const Color primaryDark = Color(0xFF003D9B);
   static const Color onPrimaryDark = Color(0xFF003353);
   static const Color primaryContainerDark = Color(0xFF004A76);
   static const Color onPrimaryContainerDark = Color(0xFFCDE5FF);
@@ -124,6 +124,12 @@ final class AppColors {
     surface: surface,
     onSurface: onSurface,
     onSurfaceVariant: onSurfaceVariant,
+    surfaceBright: surfaceBright,
+    surfaceContainer: surfaceContainer,
+    surfaceContainerHigh: surfaceContainerHigh,
+    surfaceContainerHighest: surfaceContainerHighest,
+    surfaceContainerLow: surfaceContainerLow,
+    surfaceContainerLowest: surfaceContainerLowest,
     outline: outline,
     outlineVariant: outlineVariant,
     shadow: shadow,
@@ -155,6 +161,12 @@ final class AppColors {
     surface: surfaceDark,
     onSurface: onSurfaceDark,
     onSurfaceVariant: onSurfaceVariantDark,
+    surfaceBright: surfaceBrightDark,
+    surfaceContainer: surfaceContainerDark,
+    surfaceContainerHigh: surfaceContainerHighDark,
+    surfaceContainerHighest: surfaceContainerHighestDark,
+    surfaceContainerLow: surfaceContainerLowDark,
+    surfaceContainerLowest: surfaceContainerLowestDark,
     outline: outlineDark,
     outlineVariant: outlineVariantDark,
     shadow: shadowDark,

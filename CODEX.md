@@ -112,6 +112,8 @@ decisions over generic Flutter advice.
 - Follow existing patterns in the codebase for state management, navigation, and
   dependency injection rather than introducing new approaches without a clear need.
 - Do not pass any extent data and objects to constructors or methods.
+- Use `ColorScheme.of(context)`, `TextTheme.of(context)`, and similar context-based theming accessors in widgets rather than passing theme data through constructors.
+- Use shorthand feature for enumerators where possible, e.g. `.start` instead of `EnumType.start`.
 
 ## Architecture Guidance
 

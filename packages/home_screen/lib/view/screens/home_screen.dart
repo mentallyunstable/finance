@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_screen/view/components/categories_spending_chart.dart';
 import 'package:home_screen/view/components/total_balance_card.dart';
+import 'package:transaction_feature/view/components/recent_activity_widget.dart';
 
 final class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -18,14 +19,15 @@ final class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
+        padding: .symmetric(horizontal: 24, vertical: 32),
         child: Column(
           children: [
-            const SizedBox(height: 32),
-            const TotalBalanceCard(),
-            const SizedBox(height: 40),
+            TotalBalanceCard(),
+            SizedBox(height: 40),
             CategoriesSpendingChart(),
-            const SizedBox(height: 1600),
+            SizedBox(height: 16),
+            RecentActivityWidget(),
           ],
         ),
       ),

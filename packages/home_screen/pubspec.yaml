@@ -13,9 +13,11 @@ dependencies:
   flutter:
     sdk: flutter
 
+  fl_chart: ^1.2.0
+
   core: any
   design_system: any
-  fl_chart: ^1.2.0
+  transaction_feature: any
 
 dev_dependencies:
   flutter_test:

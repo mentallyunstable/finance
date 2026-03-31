@@ -44,7 +44,7 @@ final class AppShell extends StatelessWidget {
                 ],
               ),
               child: InkResponse(
-                onTap: () => _goToVoiceRecognition(context),
+                onTap: () => _goToTransactionCreation(context),
                 containedInkWell: true,
                 highlightShape: BoxShape.circle,
                 radius: 28,
@@ -70,8 +70,8 @@ final class AppShell extends StatelessWidget {
     );
   }
 
-  void _goToVoiceRecognition(final BuildContext context) {
-    GoRouter.of(context).pushVoiceRecognitionScreen();
+  void _goToTransactionCreation(final BuildContext context) {
+    GoRouter.of(context).pushCreateTransactionScreen();
   }
 }
 
