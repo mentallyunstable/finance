@@ -20,27 +20,25 @@ final class TryCatchError {
     final Object? exception,
     final StackTrace? stackTrace,
     final String? message,
-  }) =>
-      TryCatchError._internal(
-        source: TryCatchErrorSource.local,
-        exception: exception,
-        stackTrace: stackTrace,
-        message: message,
-      );
+  }) => TryCatchError._internal(
+    source: TryCatchErrorSource.local,
+    exception: exception,
+    stackTrace: stackTrace,
+    message: message,
+  );
 
   factory TryCatchError.remote({
     required final CommonErrorModel remoteError,
     final Object? exception,
     final StackTrace? stackTrace,
     final String? message,
-  }) =>
-      TryCatchError._internal(
-        source: TryCatchErrorSource.local,
-        remoteError: remoteError,
-        exception: exception,
-        stackTrace: stackTrace,
-        message: message,
-      );
+  }) => TryCatchError._internal(
+    source: TryCatchErrorSource.local,
+    remoteError: remoteError,
+    exception: exception,
+    stackTrace: stackTrace,
+    message: message,
+  );
 
   String get errorMessage {
     if (source == TryCatchErrorSource.remote) {

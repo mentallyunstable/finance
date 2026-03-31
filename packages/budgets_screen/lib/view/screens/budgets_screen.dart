@@ -54,7 +54,11 @@ final class BudgetsScreen extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [colorScheme.surface, AppColors.surfaceContainerLow, colorScheme.surface],
+          colors: [
+            colorScheme.surface,
+            AppColors.surfaceContainerLow,
+            colorScheme.surface,
+          ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -71,18 +75,31 @@ final class BudgetsScreen extends StatelessWidget {
                   Container(
                     width: 32,
                     height: 32,
-                    decoration: const BoxDecoration(color: Color(0xFFF1D3BF), shape: BoxShape.circle),
-                    child: Icon(Icons.person_outline_rounded, size: 18, color: colorScheme.primary),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFF1D3BF),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.person_outline_rounded,
+                      size: 18,
+                      color: colorScheme.primary,
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Text(
                     'Finance',
-                    style: textTheme.titleMedium?.copyWith(color: colorScheme.primary, fontWeight: FontWeight.w700),
+                    style: textTheme.titleMedium?.copyWith(
+                      color: colorScheme.primary,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                   const Spacer(),
                   IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.notifications_none_rounded, color: colorScheme.onSurfaceVariant),
+                    icon: Icon(
+                      Icons.notifications_none_rounded,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
                   ),
                 ],
               ),
@@ -102,32 +119,57 @@ final class BudgetsScreen extends StatelessWidget {
                   Expanded(
                     child: Text(
                       'Budgets',
-                      style: textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w800, letterSpacing: -1.2),
+                      style: textTheme.headlineMedium?.copyWith(
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -1.2,
+                      ),
                     ),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text('Total Limit', style: textTheme.bodySmall?.copyWith(color: colorScheme.onSurfaceVariant)),
+                      Text(
+                        'Total Limit',
+                        style: textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
                       const SizedBox(height: 4),
-                      Text('\$4,250.00', style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800)),
+                      Text(
+                        '\$4,250.00',
+                        style: textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
                     ],
                   ),
                 ],
               ),
               const SizedBox(height: 24),
-              _PrimaryBudgetCard(textTheme: textTheme, colorScheme: colorScheme),
+              _PrimaryBudgetCard(
+                textTheme: textTheme,
+                colorScheme: colorScheme,
+              ),
               const SizedBox(height: 30),
               Row(
                 children: [
-                  Text('Categories', style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800)),
+                  Text(
+                    'Categories',
+                    style: textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
                   const Spacer(),
                   TextButton(onPressed: () {}, child: const Text('Edit All')),
                 ],
               ),
               const SizedBox(height: 20),
               for (final item in budgetItems) ...[
-                _BudgetCategoryCard(category: item, textTheme: textTheme, colorScheme: colorScheme),
+                _BudgetCategoryCard(
+                  category: item,
+                  textTheme: textTheme,
+                  colorScheme: colorScheme,
+                ),
                 const SizedBox(height: 16),
               ],
               const SizedBox(height: 28),
@@ -154,12 +196,17 @@ final class BudgetsScreen extends StatelessWidget {
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 17),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(28),
+                      ),
                     ),
                     icon: const Icon(Icons.add_rounded, size: 20),
                     label: Text(
                       'Create New Budget',
-                      style: textTheme.labelLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.w700),
+                      style: textTheme.labelLarge?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 ),
@@ -173,7 +220,10 @@ final class BudgetsScreen extends StatelessWidget {
 }
 
 final class _PrimaryBudgetCard extends StatelessWidget {
-  const _PrimaryBudgetCard({required this.textTheme, required this.colorScheme});
+  const _PrimaryBudgetCard({
+    required this.textTheme,
+    required this.colorScheme,
+  });
 
   final TextTheme textTheme;
   final ColorScheme colorScheme;
@@ -185,7 +235,13 @@ final class _PrimaryBudgetCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(28),
-        boxShadow: const [BoxShadow(color: Color(0x0A191C1E), blurRadius: 48, offset: Offset(0, 24))],
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x0A191C1E),
+            blurRadius: 48,
+            offset: Offset(0, 24),
+          ),
+        ],
       ),
       child: Stack(
         children: [
@@ -195,7 +251,10 @@ final class _PrimaryBudgetCard extends StatelessWidget {
             child: Container(
               width: 112,
               height: 112,
-              decoration: BoxDecoration(color: colorScheme.primary.withValues(alpha: 0.05), shape: BoxShape.circle),
+              decoration: BoxDecoration(
+                color: colorScheme.primary.withValues(alpha: 0.05),
+                shape: BoxShape.circle,
+              ),
             ),
           ),
           Column(
@@ -208,16 +267,27 @@ final class _PrimaryBudgetCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Monthly Health', style: textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
+                        Text(
+                          'Monthly Health',
+                          style: textTheme.headlineSmall?.copyWith(
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
                         const SizedBox(height: 6),
                         Text(
                           'You\'ve spent 64% of your total budget.',
-                          style: textTheme.bodyLarge?.copyWith(color: colorScheme.onSurfaceVariant),
+                          style: textTheme.bodyLarge?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  Icon(Icons.auto_graph_rounded, color: const Color(0xFF00714D), size: 28),
+                  Icon(
+                    Icons.auto_graph_rounded,
+                    color: const Color(0xFF00714D),
+                    size: 28,
+                  ),
                 ],
               ),
               const SizedBox(height: 24),
@@ -226,10 +296,17 @@ final class _PrimaryBudgetCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       'Spent: \$2,720.00',
-                      style: textTheme.bodyMedium?.copyWith(color: colorScheme.onSurfaceVariant),
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
                     ),
                   ),
-                  Text('\$1,530.00 left', style: textTheme.bodyMedium?.copyWith(color: colorScheme.onSurfaceVariant)),
+                  Text(
+                    '\$1,530.00 left',
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 8),
@@ -239,7 +316,9 @@ final class _PrimaryBudgetCard extends StatelessWidget {
                   value: 0.64,
                   minHeight: 12,
                   backgroundColor: AppColors.surfaceContainer,
-                  valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
+                  valueColor: const AlwaysStoppedAnimation<Color>(
+                    AppColors.primary,
+                  ),
                 ),
               ),
               const SizedBox(height: 28),
@@ -250,7 +329,11 @@ final class _PrimaryBudgetCard extends StatelessWidget {
                   ),
                   SizedBox(width: 16),
                   Expanded(
-                    child: _MetricTile(label: 'PROJECTED\nSAVINGS', value: '\$420.00', highlighted: true),
+                    child: _MetricTile(
+                      label: 'PROJECTED\nSAVINGS',
+                      value: '\$420.00',
+                      highlighted: true,
+                    ),
                   ),
                 ],
               ),
@@ -263,7 +346,11 @@ final class _PrimaryBudgetCard extends StatelessWidget {
 }
 
 final class _MetricTile extends StatelessWidget {
-  const _MetricTile({required this.label, required this.value, this.highlighted = false});
+  const _MetricTile({
+    required this.label,
+    required this.value,
+    this.highlighted = false,
+  });
 
   final String label;
   final String value;
@@ -276,7 +363,9 @@ final class _MetricTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
-        color: highlighted ? const Color(0xFFDDF7EB) : AppColors.surfaceContainerLow,
+        color: highlighted
+            ? const Color(0xFFDDF7EB)
+            : AppColors.surfaceContainerLow,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -285,7 +374,9 @@ final class _MetricTile extends StatelessWidget {
           Text(
             label,
             style: textTheme.labelSmall?.copyWith(
-              color: highlighted ? const Color(0xFF00714D) : AppColors.onSurfaceVariant,
+              color: highlighted
+                  ? const Color(0xFF00714D)
+                  : AppColors.onSurfaceVariant,
               fontWeight: FontWeight.w500,
               letterSpacing: 0.6,
             ),
@@ -305,7 +396,11 @@ final class _MetricTile extends StatelessWidget {
 }
 
 final class _BudgetCategoryCard extends StatelessWidget {
-  const _BudgetCategoryCard({required this.category, required this.textTheme, required this.colorScheme});
+  const _BudgetCategoryCard({
+    required this.category,
+    required this.textTheme,
+    required this.colorScheme,
+  });
 
   final _BudgetCategory category;
   final TextTheme textTheme;
@@ -313,18 +408,36 @@ final class _BudgetCategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final stripe = category.dangerStripe ? Border(left: BorderSide(color: category.accentColor, width: 4)) : null;
+    final stripe = category.dangerStripe
+        ? Border(left: BorderSide(color: category.accentColor, width: 4))
+        : null;
 
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(24),
-        border: category.highlighted ? Border.all(color: category.accentColor.withValues(alpha: 0.12)) : null,
-        boxShadow: const [BoxShadow(color: Color(0x08191C1E), blurRadius: 30, offset: Offset(0, 16))],
+        border: category.highlighted
+            ? Border.all(color: category.accentColor.withValues(alpha: 0.12))
+            : null,
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x08191C1E),
+            blurRadius: 30,
+            offset: Offset(0, 16),
+          ),
+        ],
       ),
       child: Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(24), border: stripe),
-        padding: EdgeInsets.fromLTRB(category.dangerStripe ? 20 : 18, 18, 18, 18),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24),
+          border: stripe,
+        ),
+        padding: EdgeInsets.fromLTRB(
+          category.dangerStripe ? 20 : 18,
+          18,
+          18,
+          18,
+        ),
         child: Column(
           children: [
             Row(
@@ -336,20 +449,33 @@ final class _BudgetCategoryCard extends StatelessWidget {
                     color: category.accentColor.withValues(alpha: 0.14),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(category.icon, color: category.accentColor, size: 22),
+                  child: Icon(
+                    category.icon,
+                    color: category.accentColor,
+                    size: 22,
+                  ),
                 ),
                 const SizedBox(width: 14),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(category.title, style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+                      Text(
+                        category.title,
+                        style: textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
                       const SizedBox(height: 2),
                       Text(
                         category.subtitle,
                         style: textTheme.bodySmall?.copyWith(
-                          color: category.dangerStripe ? category.accentColor : colorScheme.onSurfaceVariant,
-                          fontWeight: category.dangerStripe ? FontWeight.w500 : FontWeight.w400,
+                          color: category.dangerStripe
+                              ? category.accentColor
+                              : colorScheme.onSurfaceVariant,
+                          fontWeight: category.dangerStripe
+                              ? FontWeight.w500
+                              : FontWeight.w400,
                         ),
                       ),
                     ],
