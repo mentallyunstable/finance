@@ -10,14 +10,12 @@ startup reliability, native integrations, and maintainable delivery workflow.
 - Modular monorepo structure with `apps/*` and `packages/*`
 - Flutter workspace tooling with FVM and Melos
 - Dedicated app startup and dependency initialization flow
-- Shared design system package with theme, colors, and `Manrope` typography
+- Shared design system package with theme, colors, and typography
 - Main application shell with routed navigation
 - Home dashboard UI with balance, categories, and recent activity sections
 - Budgets overview screen with richer visual treatment
-- Voice recognition feature wired through `flutter_bloc`
 - Federated voice plugin architecture for Android, iOS, and shared platform
   interface
-- Reusable transaction preview components and mock transaction data
 
 ## Current maturity
 
@@ -71,8 +69,8 @@ The repository is organized to keep concerns separate and scalable:
 
 - `flutter_bloc` for predictable state transitions in feature flows
 - `go_router` for app navigation and shell-based route structure
-- Melos for monorepo orchestration
-- FVM for consistent Flutter SDK versioning
+- `Melos` for monorepo orchestration
+- `FVM` for consistent Flutter SDK versioning
 - Shared package boundaries to prevent app code from absorbing everything
 - Federated plugin design to keep native voice integrations extensible and
   platform-specific where needed
@@ -91,8 +89,7 @@ I currently use a lightweight branching model:
 - `dev` for integration
 - `features/*` for isolated feature work
 
-The recent repository history reflects that flow clearly. Feature branches are
-merged into `dev`, then promoted into `main` once integrated. Examples already
+Feature branches are merged into `dev`, then promoted into `main` once integrated. Examples already
 present in this repo include `features/home-screen`,
 `features/budgets-screen`, `features/ios-voice-recognition`, and
 `features/create-transaction`.
