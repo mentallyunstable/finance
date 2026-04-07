@@ -77,7 +77,7 @@ public class VoiceIosPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
         -> SFSpeechRecognizer?
     {
         if let locale {
-            recognizer = SFSpeechRecognizer(locale: locale)
+            recognizer = createRecognizerForRequestedLocale(locale)
         }
 
         if recognizer == nil {
@@ -85,6 +85,32 @@ public class VoiceIosPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
         }
 
         return recognizer
+    }
+
+    private func createRecognizerForRequestedLocale(_ locale: Locale)
+        -> SFSpeechRecognizer?
+    {
+        let supportedLocales = SFSpeechRecognizer.supportedLocales()
+
+        if supportedLocales.contains(where: {
+            $0.identifier.caseInsensitiveCompare(locale.identifier) == .orderedSame
+        }) {
+            return SFSpeechRecognizer(locale: locale)
+        }
+
+        guard let languageCode = locale.languageCode else {
+            return nil
+        }
+
+        let fallbackLocale = supportedLocales.first {
+            $0.languageCode?.caseInsensitiveCompare(languageCode) == .orderedSame
+        }
+
+        guard let fallbackLocale else {
+            return nil
+        }
+
+        return SFSpeechRecognizer(locale: fallbackLocale)
     }
 
     /*

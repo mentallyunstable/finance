@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:transaction_feature/data/category_data.dart';
-import 'package:transaction_feature/data/transaction_data.dart';
+import 'package:transaction_feature/domain/entity/transaction_entity.dart';
 
 final class TransactionListItem extends StatelessWidget {
-  final TransactionData data;
+  final TransactionEntity transaction;
 
   const TransactionListItem({
     super.key,
-    required this.data,
+    required this.transaction,
   });
 
   @override
   Widget build(BuildContext context) {
-    final category = CategoryData.mockData.firstWhere((c) => c.id == data.categoryId);
+    final category = CategoryData.mockData.firstWhere((c) => c.id == transaction.categoryId);
 
     return ListTile(
       minTileHeight: 80,
@@ -30,15 +30,15 @@ final class TransactionListItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(data.title, style: TextTheme.of(context).titleSmall),
+          Text(transaction.title, style: TextTheme.of(context).titleSmall),
           Text(
-            '${category.title} • ${data.date.hour}:${data.date.minute}',
+            '${category.title} • ${transaction.date.hour}:${transaction.date.minute}',
             style: TextTheme.of(context).bodySmall,
           ),
         ],
       ),
       trailing: Text(
-        data.amount,
+        '\$${transaction.amount}',
         style: TextTheme.of(context).bodyLarge,
       ),
     );

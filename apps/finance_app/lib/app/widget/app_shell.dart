@@ -92,6 +92,7 @@ final class _BottomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final double additionalBottomPadding = MediaQuery.viewPaddingOf(context).bottom;
 
+    // TODO: localize navigation tabs labels
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
       child: BackdropFilter(

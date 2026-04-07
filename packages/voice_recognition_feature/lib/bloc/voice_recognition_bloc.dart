@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:core/services/permission_service.dart';
+import 'package:core/utils/logger.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:voice_platform_interface/voice_platform_interface.dart';
@@ -112,16 +113,23 @@ final class VoiceRecognitionBloc extends Bloc<VoiceRecognitionBlocEvent, VoiceRe
     // Start voice recognition service
     try {
       await _voicePlugin.startListening();
-    } on Exception catch (error) {
+    } catch (exception, stackTrace) {
       await _cancelSubscriptions();
+
+      logger.error(
+        'Error starting voice recognition',
+        exception: exception,
+        stackTrace: stackTrace,
+      );
 
       emit(
         VoiceRecognitionBlocState.error(
           data: _currentData.copyWith(isListening: false),
           code: 'START_LISTENING_FAILED',
-          message: error.toString(),
+          message: exception.toString(),
         ),
       );
+
       return;
     }
 
@@ -192,6 +200,8 @@ final class VoiceRecognitionBloc extends Bloc<VoiceRecognitionBlocEvent, VoiceRe
     if (event.code == 'CLIENT' && !state.data.isListening) {
       return;
     }
+
+    logger.error('Voice recognition error: ${event.code} - ${event.message}');
 
     emit(
       VoiceRecognitionBlocState.error(

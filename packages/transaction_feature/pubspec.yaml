@@ -13,8 +13,12 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_bloc: ^9.1.1
+  auto_size_text: ^3.0.0
+
   core: any
   design_system: any
+  voice_recognition_feature: any
 
 dev_dependencies:
   flutter_test:
