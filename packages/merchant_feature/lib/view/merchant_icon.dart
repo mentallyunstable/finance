@@ -12,6 +12,7 @@ final class MerchantIcon extends StatefulWidget {
   final MerchantIconRepository? repository;
   final double size;
   final Color? color;
+  final Widget? fallback;
 
   const MerchantIcon({
     super.key,
@@ -19,6 +20,7 @@ final class MerchantIcon extends StatefulWidget {
     this.repository,
     this.size = 24,
     this.color,
+    this.fallback,
   });
 
   @override
@@ -80,6 +82,6 @@ final class _MerchantIconState extends State<MerchantIcon> {
   }
 
   Widget _fallback() {
-    return Icon(Icons.storefront_outlined, size: widget.size, color: widget.color);
+    return widget.fallback ?? Icon(Icons.storefront_outlined, size: widget.size, color: widget.color);
   }
 }
