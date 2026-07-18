@@ -61,9 +61,9 @@ final class MerchantBloc extends Bloc<MerchantBlocEvent, MerchantBlocState> {
         state.data.merchants.map((merchant) => merchant.slug),
       ),
       name: name,
-      description: event.description?.trim(),
-      iconId: event.iconId?.trim(),
-      categoryIds: event.categoryIds,
+      description: _trimToNull(event.description),
+      iconId: _trimToNull(event.iconId),
+      categoryIds: _normalizeCategoryIds(event.categoryIds),
       usageCount: 0,
     );
     final data = state.data.copyWith(
@@ -89,4 +89,23 @@ final class MerchantBloc extends Bloc<MerchantBlocEvent, MerchantBlocState> {
       ),
     );
   }
+}
+
+String? _trimToNull(String? value) {
+  final trimmed = value?.trim();
+  return trimmed == null || trimmed.isEmpty ? null : trimmed;
+}
+
+List<String> _normalizeCategoryIds(Iterable<String> categoryIds) {
+  final normalized = <String>[];
+  final seen = <String>{};
+
+  for (final categoryId in categoryIds) {
+    final trimmed = categoryId.trim();
+    if (trimmed.isNotEmpty && seen.add(trimmed)) {
+      normalized.add(trimmed);
+    }
+  }
+
+  return normalized;
 }

@@ -6,6 +6,8 @@ import 'package:merchant_feature/data/iconify_merchant_icon_repository.dart';
 import 'package:merchant_feature/data/merchant_icon_repository.dart';
 
 final class MerchantIcon extends StatefulWidget {
+  static final MerchantIconRepository _defaultRepository = IconifyMerchantIconRepository();
+
   final String? iconId;
   final MerchantIconRepository? repository;
   final double size;
@@ -73,7 +75,8 @@ final class _MerchantIconState extends State<MerchantIcon> {
     if (iconId == null) {
       return null;
     }
-    return (widget.repository ?? IconifyMerchantIconRepository()).getFile(iconId);
+    final repository = widget.repository ?? MerchantIcon._defaultRepository;
+    return Future.sync(() => repository.getFile(iconId));
   }
 
   Widget _fallback() {
