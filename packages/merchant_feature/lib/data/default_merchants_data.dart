@@ -36,4 +36,11 @@ final List<MerchantData> defaultMerchantsData = List.unmodifiable([
     categoryIds: const ['food'],
     usageCount: 1,
   ),
+  MerchantData(
+    slug: 'apple',
+    name: 'Apple',
+    iconId: 'simple-icons:apple',
+    categoryIds: const ['electronics'],
+    usageCount: 0,
+  ),
 ]);

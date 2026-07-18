@@ -30,27 +30,35 @@ final class MerchantField extends StatefulWidget {
 final class MerchantFieldState extends State<MerchantField> {
   final _focusNode = FocusNode();
   final _toastService = ToastService();
+  late final TextEditingController _autocompleteController;
   Timer? _toastTimer;
   MerchantData? _selectedMerchant;
   bool _isToastVisible = false;
   bool _isAdding = false;
-  bool _isUpdatingController = false;
+  bool _isUpdatingInternalController = false;
+  bool _isUpdatingExternalController = false;
   bool _isRefreshingOptions = false;
+  int _selectionRevision = 0;
+  int _selectionCheckRevision = 0;
 
   @override
   void initState() {
     super.initState();
+    _autocompleteController = TextEditingController.fromValue(
+      widget.controller.value,
+    );
+    _autocompleteController.addListener(_onAutocompleteControllerChanged);
     _focusNode.addListener(_onFocusChanged);
-    widget.controller.addListener(_onControllerChanged);
+    widget.controller.addListener(_onExternalControllerChanged);
   }
 
   @override
   void didUpdateWidget(covariant MerchantField oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.controller != widget.controller) {
-      oldWidget.controller.removeListener(_onControllerChanged);
-      widget.controller.addListener(_onControllerChanged);
-      _onControllerChanged();
+      oldWidget.controller.removeListener(_onExternalControllerChanged);
+      widget.controller.addListener(_onExternalControllerChanged);
+      _onExternalControllerChanged();
     }
   }
 
@@ -62,7 +70,11 @@ final class MerchantFieldState extends State<MerchantField> {
       _isToastVisible = false;
       _toastService.fToast.removeCustomToast();
     }
-    widget.controller.removeListener(_onControllerChanged);
+    widget.controller.removeListener(_onExternalControllerChanged);
+    _autocompleteController.removeListener(
+      _onAutocompleteControllerChanged,
+    );
+    _autocompleteController.dispose();
     _focusNode.removeListener(_onFocusChanged);
     _focusNode.dispose();
     super.dispose();
@@ -73,7 +85,7 @@ final class MerchantFieldState extends State<MerchantField> {
     return LayoutBuilder(
       builder: (context, constraints) {
         return RawAutocomplete<MerchantData>(
-          textEditingController: widget.controller,
+          textEditingController: _autocompleteController,
           focusNode: _focusNode,
           displayStringForOption: (merchant) => merchant.name,
           optionsBuilder: (value) {
@@ -159,7 +171,7 @@ final class MerchantFieldState extends State<MerchantField> {
   }
 
   void suggestAdd() {
-    final name = widget.controller.text.trim();
+    final name = _autocompleteController.text.trim();
     if (name.isEmpty) {
       return;
     }
@@ -214,44 +226,55 @@ final class MerchantFieldState extends State<MerchantField> {
   void _onTextEdited(String value) {
     final selectedMerchant = _selectedMerchant;
     if (selectedMerchant != null && value != selectedMerchant.name) {
+      _selectionCheckRevision += 1;
       _selectedMerchant = null;
       widget.onChanged(null);
     }
   }
 
   void _onFocusChanged() {
-    if (!_focusNode.hasFocus || widget.controller.text.isNotEmpty) {
+    if (!_focusNode.hasFocus || _autocompleteController.text.isNotEmpty) {
       return;
     }
 
-    final value = widget.controller.value;
+    final value = _autocompleteController.value;
     // RawAutocomplete recomputes options only after a controller text change.
     _isRefreshingOptions = true;
     try {
-      widget.controller.value = const TextEditingValue(
+      _autocompleteController.value = const TextEditingValue(
         text: ' ',
         selection: TextSelection.collapsed(offset: 1),
       );
-      widget.controller.value = value;
+      _autocompleteController.value = value;
     } finally {
       _isRefreshingOptions = false;
     }
   }
 
-  void _onControllerChanged() {
-    if (_isUpdatingController || _isRefreshingOptions) {
+  void _onAutocompleteControllerChanged() {
+    if (_isUpdatingInternalController || _isRefreshingOptions) {
       return;
     }
+
+    _setExternalControllerValue(_autocompleteController.value);
+  }
+
+  void _onExternalControllerChanged() {
+    if (_isUpdatingExternalController) {
+      return;
+    }
+
+    _setAutocompleteControllerValue(widget.controller.value);
 
     final selectedMerchant = _selectedMerchant;
     if (selectedMerchant == null || widget.controller.text == selectedMerchant.name) {
       return;
     }
 
+    final revision = ++_selectionCheckRevision;
     scheduleMicrotask(() {
       if (!mounted ||
-          _isUpdatingController ||
-          _isRefreshingOptions ||
+          revision != _selectionCheckRevision ||
           !identical(_selectedMerchant, selectedMerchant) ||
           widget.controller.text == selectedMerchant.name) {
         return;
@@ -262,15 +285,20 @@ final class MerchantFieldState extends State<MerchantField> {
   }
 
   void _submit(String value, VoidCallback onFieldSubmitted) {
-    final name = value.trim();
+    final selectionRevision = _selectionRevision;
+    onFieldSubmitted();
+    if (_selectionRevision != selectionRevision) {
+      return;
+    }
+
+    final name = _autocompleteController.text.trim();
     if (name.isEmpty) {
       return;
     }
 
     final exactMerchant = _findExactMerchant(name);
     if (exactMerchant != null) {
-      onFieldSubmitted();
-      if (!identical(_selectedMerchant, exactMerchant)) {
+      if (_selectedMerchant?.slug != exactMerchant.slug) {
         _selectMerchant(exactMerchant);
       }
       return;
@@ -290,17 +318,42 @@ final class MerchantFieldState extends State<MerchantField> {
   }
 
   void _selectMerchant(MerchantData merchant) {
+    _selectionCheckRevision += 1;
+    _selectionRevision += 1;
     _selectedMerchant = merchant;
-    _isUpdatingController = true;
-    try {
-      widget.controller.value = TextEditingValue(
-        text: merchant.name,
-        selection: TextSelection.collapsed(offset: merchant.name.length),
-      );
-    } finally {
-      _isUpdatingController = false;
-    }
+    final value = TextEditingValue(
+      text: merchant.name,
+      selection: TextSelection.collapsed(offset: merchant.name.length),
+    );
+    _setAutocompleteControllerValue(value);
+    _setExternalControllerValue(value);
     widget.onChanged(merchant);
+  }
+
+  void _setAutocompleteControllerValue(TextEditingValue value) {
+    if (_autocompleteController.value == value) {
+      return;
+    }
+
+    _isUpdatingInternalController = true;
+    try {
+      _autocompleteController.value = value;
+    } finally {
+      _isUpdatingInternalController = false;
+    }
+  }
+
+  void _setExternalControllerValue(TextEditingValue value) {
+    if (widget.controller.value == value) {
+      return;
+    }
+
+    _isUpdatingExternalController = true;
+    try {
+      widget.controller.value = value;
+    } finally {
+      _isUpdatingExternalController = false;
+    }
   }
 
   Future<void> _requestAdd(String name) async {

@@ -43,6 +43,7 @@ class _CreateTransactionScreenState extends State<CreateTransactionScreen> {
   CategoryData? _selectedCategory;
   MerchantData? _selectedMerchant;
   bool _didRecordMerchantUsage = false;
+  bool _isSubmitting = false;
 
   @override
   void dispose() {
@@ -68,6 +69,7 @@ class _CreateTransactionScreenState extends State<CreateTransactionScreen> {
           }
           Navigator.of(context).pop(true);
         } else if (state is ErrorCreateTransactionBlocState) {
+          _isSubmitting = false;
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message)),
           );
@@ -278,6 +280,10 @@ class _CreateTransactionScreenState extends State<CreateTransactionScreen> {
   }
 
   void _createTransaction() {
+    if (_isSubmitting) {
+      return;
+    }
+
     final merchantText = _merchantController.text.trim();
     final notes = _notesController.text.trim();
     final selectedCategory = _selectedCategory;
@@ -294,6 +300,7 @@ class _CreateTransactionScreenState extends State<CreateTransactionScreen> {
       return;
     }
 
+    _isSubmitting = true;
     context.read<TransactionBloc>().add(
       TransactionBlocEvent.create(
         title: _selectedMerchant?.name ?? selectedCategory.name,
