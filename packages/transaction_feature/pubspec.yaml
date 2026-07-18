@@ -20,6 +20,7 @@ dependencies:
   design_system: any
   voice_recognition_feature: any
   category_feature: any
+  merchant_feature: any
 
 dev_dependencies:
   flutter_test:
