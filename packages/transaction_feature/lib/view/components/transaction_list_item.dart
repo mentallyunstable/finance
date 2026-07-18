@@ -1,19 +1,28 @@
 import 'package:category_feature/data/default_categories_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:merchant_feature/data/merchant_data.dart';
+import 'package:merchant_feature/data/merchant_icon_repository.dart';
+import 'package:merchant_feature/view/merchant_icon.dart';
 import 'package:transaction_feature/domain/entity/transaction_entity.dart';
 import 'package:transaction_feature/view/extensions/transaction_entity_presentation_extension.dart';
 
 final class TransactionListItem extends StatelessWidget {
   final TransactionEntity transaction;
+  final Iterable<MerchantData> merchants;
 
   const TransactionListItem({
     super.key,
     required this.transaction,
+    this.merchants = const [],
   });
 
   @override
   Widget build(BuildContext context) {
     final category = defaultCategoriesData.firstWhere((c) => c.id == transaction.categoryId);
+    final merchant = _findMerchant();
+    final merchantIconId = merchant?.iconId;
+    final categoryIcon = Icon(category.icon, color: category.color);
 
     return ListTile(
       minTileHeight: 80,
@@ -25,7 +34,13 @@ final class TransactionListItem extends StatelessWidget {
       tileColor: ColorScheme.of(context).surfaceBright,
       leading: CircleAvatar(
         backgroundColor: ColorScheme.of(context).surfaceContainerHigh,
-        child: Icon(category.icon, color: category.color),
+        child: merchantIconId == null
+            ? categoryIcon
+            : MerchantIcon(
+                iconId: merchantIconId,
+                repository: context.read<MerchantIconRepository>(),
+                fallback: categoryIcon,
+              ),
       ),
       title: Column(
         mainAxisSize: MainAxisSize.min,
@@ -43,5 +58,19 @@ final class TransactionListItem extends StatelessWidget {
         style: TextTheme.of(context).bodyLarge,
       ),
     );
+  }
+
+  MerchantData? _findMerchant() {
+    final merchantSlug = transaction.merchantSlug;
+    if (merchantSlug == null) {
+      return null;
+    }
+
+    for (final merchant in merchants) {
+      if (merchant.slug == merchantSlug) {
+        return merchant;
+      }
+    }
+    return null;
   }
 }

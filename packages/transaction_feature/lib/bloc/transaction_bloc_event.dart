@@ -7,7 +7,7 @@ sealed class TransactionBlocEvent {
     required final String title,
     required final String amount,
     required final String categoryId,
-    required final String? merchant,
+    required final String? merchantSlug,
     required final String? notes,
   }) = CreateTransactionEvent;
 }
@@ -16,14 +16,14 @@ final class CreateTransactionEvent extends TransactionBlocEvent {
   final String title;
   final String amount;
   final String categoryId;
-  final String? merchant;
+  final String? merchantSlug;
   final String? notes;
 
   const CreateTransactionEvent({
     required this.title,
     required this.amount,
     required this.categoryId,
-    required this.merchant,
+    required this.merchantSlug,
     required this.notes,
   });
 }

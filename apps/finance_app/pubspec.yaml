@@ -45,6 +45,7 @@ dependencies:
   voice_recognition_feature: any
   transaction_feature: any
   category_feature: any
+  merchant_feature: any
 
 dev_dependencies:
   flutter_test:

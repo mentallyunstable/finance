@@ -11,7 +11,7 @@ final class TransactionDto implements TransactionEntity {
   final String categoryId;
 
   @override
-  final String? merchant;
+  final String? merchantSlug;
 
   @override
   final String? notes;
@@ -23,7 +23,7 @@ final class TransactionDto implements TransactionEntity {
     required this.title,
     required this.categoryId,
     required this.amount,
-    required this.merchant,
+    required this.merchantSlug,
     required this.notes,
     required this.date,
   });

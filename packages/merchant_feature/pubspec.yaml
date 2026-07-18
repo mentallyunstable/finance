@@ -1,0 +1,28 @@
+name: merchant_feature
+description: Reusable merchant data, search, state, and icon support.
+version: 0.0.1
+
+resolution: workspace
+
+environment:
+  sdk: ^3.11.3
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  dio: ^5.9.2
+  flutter_bloc: ^9.1.1
+  flutter_cache_manager: ^3.4.1
+  flutter_svg: ^2.2.3
+
+  category_feature: any
+  core: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:

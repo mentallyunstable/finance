@@ -5,6 +5,9 @@ import 'package:core/services/modal_sheet_service.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:merchant_feature/bloc/merchant_bloc.dart';
+import 'package:merchant_feature/data/merchant_data.dart';
+import 'package:merchant_feature/view/merchant_field.dart';
 import 'package:transaction_feature/bloc/transaction_bloc.dart';
 import 'package:transaction_feature/view/components/create_transaction_icon_button.dart';
 import 'package:transaction_feature/view/components/transaction_keyboard.dart';
@@ -12,8 +15,19 @@ import 'package:transaction_feature/view/components/voice_recognition_icon_butto
 import 'package:voice_recognition_feature/bloc/voice_recognition_bloc.dart';
 import 'package:voice_recognition_feature/view/components/voice_recognition_bloc_provider.dart';
 
+typedef AddMerchantCallback =
+    Future<MerchantData?> Function(
+      BuildContext context,
+      String name,
+    );
+
 final class CreateTransactionScreen extends StatefulWidget {
-  const CreateTransactionScreen({super.key});
+  final AddMerchantCallback onAddMerchant;
+
+  const CreateTransactionScreen({
+    super.key,
+    required this.onAddMerchant,
+  });
 
   @override
   State<CreateTransactionScreen> createState() => _CreateTransactionScreenState();
@@ -23,9 +37,13 @@ class _CreateTransactionScreenState extends State<CreateTransactionScreen> {
   final _categoryController = TextEditingController();
   final _merchantController = TextEditingController();
   final _notesController = TextEditingController();
+  final _merchantFieldKey = GlobalKey<MerchantFieldState>();
 
   final _amountNotifier = ValueNotifier('0');
   CategoryData? _selectedCategory;
+  MerchantData? _selectedMerchant;
+  bool _didRecordMerchantUsage = false;
+  bool _isSubmitting = false;
 
   @override
   void dispose() {
@@ -42,8 +60,16 @@ class _CreateTransactionScreenState extends State<CreateTransactionScreen> {
     return BlocListener<TransactionBloc, TransactionBlocState>(
       listener: (context, state) {
         if (state is CreatedTransactionBlocState) {
+          final selectedMerchant = _selectedMerchant;
+          if (!_didRecordMerchantUsage && selectedMerchant != null) {
+            _didRecordMerchantUsage = true;
+            context.read<MerchantBloc>().add(
+              MerchantBlocEvent.used(slug: selectedMerchant.slug),
+            );
+          }
           Navigator.of(context).pop(true);
         } else if (state is ErrorCreateTransactionBlocState) {
+          _isSubmitting = false;
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message)),
           );
@@ -155,10 +181,17 @@ class _CreateTransactionScreenState extends State<CreateTransactionScreen> {
                               onPressed: _showCategoriesModal,
                             ),
                             const Divider(height: 1, indent: 20, endIndent: 20),
-                            _OptionTextField(
-                              icon: Icons.storefront_outlined,
-                              hintText: 'Merchant Name',
-                              controller: _merchantController,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                              child: MerchantField(
+                                key: _merchantFieldKey,
+                                controller: _merchantController,
+                                textFieldKey: const Key('merchant-text-field'),
+                                onChanged: (merchant) {
+                                  setState(() => _selectedMerchant = merchant);
+                                },
+                                onAddRequested: (name) => widget.onAddMerchant(context, name),
+                              ),
                             ),
                             const Divider(height: 1, indent: 20, endIndent: 20),
                             _OptionTextField(
@@ -243,9 +276,18 @@ class _CreateTransactionScreenState extends State<CreateTransactionScreen> {
   }
 
   void _createTransaction() {
-    final merchant = _merchantController.text.trim();
+    if (_isSubmitting) {
+      return;
+    }
+
+    final merchantText = _merchantController.text.trim();
     final notes = _notesController.text.trim();
     final selectedCategory = _selectedCategory;
+
+    if (merchantText.isNotEmpty && _selectedMerchant == null) {
+      _merchantFieldKey.currentState?.suggestAdd();
+      return;
+    }
 
     if (selectedCategory == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -254,12 +296,13 @@ class _CreateTransactionScreenState extends State<CreateTransactionScreen> {
       return;
     }
 
+    _isSubmitting = true;
     context.read<TransactionBloc>().add(
       TransactionBlocEvent.create(
-        title: merchant.isNotEmpty ? merchant : selectedCategory.name,
+        title: _selectedMerchant?.name ?? selectedCategory.name,
         amount: _amountNotifier.value,
         categoryId: selectedCategory.id,
-        merchant: merchant.isEmpty ? null : merchant,
+        merchantSlug: merchantText.isEmpty ? null : _selectedMerchant?.slug,
         notes: notes.isEmpty ? null : notes,
       ),
     );

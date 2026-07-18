@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widget_previews.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:merchant_feature/bloc/merchant_bloc.dart';
+import 'package:merchant_feature/data/merchant_data.dart';
 import 'package:transaction_feature/bloc/transaction_bloc.dart';
 import 'package:transaction_feature/domain/entity/transaction_entity.dart';
 import 'package:transaction_feature/view/components/transaction_list_item.dart';
@@ -25,6 +27,7 @@ final class RecentActivityWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final merchants = context.watch<MerchantBloc>().state.data.merchants;
     return BlocBuilder<TransactionBloc, TransactionBlocState>(
       builder: (context, state) {
         final transactions = state.data.transactions;
@@ -70,6 +73,7 @@ final class RecentActivityWidget extends StatelessWidget {
                 const SizedBox(height: 16),
                 _buildSection(
                   todayTransactions,
+                  merchants: merchants,
                   identifyFirstTransaction: true,
                 ),
               ],
@@ -80,7 +84,7 @@ final class RecentActivityWidget extends StatelessWidget {
                   style: TextTheme.of(context).labelSmall,
                 ),
                 const SizedBox(height: 16),
-                _buildSection(yesterdayTransactions),
+                _buildSection(yesterdayTransactions, merchants: merchants),
               ],
             ],
           ],
@@ -91,6 +95,7 @@ final class RecentActivityWidget extends StatelessWidget {
 
   Widget _buildSection(
     final List<TransactionEntity> transactions, {
+    required final Iterable<MerchantData> merchants,
     final bool identifyFirstTransaction = false,
   }) {
     return ListView.separated(
@@ -102,6 +107,7 @@ final class RecentActivityWidget extends StatelessWidget {
       itemBuilder: (context, index) => TransactionListItem(
         key: identifyFirstTransaction && index == 0 ? latestTransactionKey : null,
         transaction: transactions[index],
+        merchants: merchants,
       ),
     );
   }
