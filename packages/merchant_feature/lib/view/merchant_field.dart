@@ -94,7 +94,7 @@ final class MerchantFieldState extends State<MerchantField> {
               limit: 5,
             );
           },
-          onSelected: _selectMerchant,
+          onSelected: _selectSuggestedMerchant,
           fieldViewBuilder: (context, controller, focusNode, _) {
             return TextField(
               key: widget.textFieldKey,
@@ -308,6 +308,11 @@ final class MerchantFieldState extends State<MerchantField> {
       }
     }
     return null;
+  }
+
+  void _selectSuggestedMerchant(MerchantData merchant) {
+    _selectMerchant(merchant);
+    _focusNode.unfocus();
   }
 
   void _selectMerchant(MerchantData merchant) {
