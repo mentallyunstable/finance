@@ -324,21 +324,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A1B2C3D4E5F60718293A4B5C /* Re-sign Native Assets */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Re-sign Native Assets";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ -z \"${EXPANDED_CODE_SIGN_IDENTITY}\" ] || [ \"${CODE_SIGNING_REQUIRED}\" = \"NO\" ]; then\n  exit 0\nfi\n\nFRAMEWORKS_DIR=\"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\nif [ ! -d \"$FRAMEWORKS_DIR\" ]; then\n  exit 0\nfi\n\nfind \"$FRAMEWORKS_DIR\" -maxdepth 1 -type d -name '*.framework' | while IFS= read -r framework; do\n  if /usr/bin/codesign -dv --verbose=2 \"$framework\" 2>&1 | /usr/bin/grep -q 'Identifier=io.flutter.flutter.native-assets.'; then\n    /usr/bin/codesign --force --sign \"$EXPANDED_CODE_SIGN_IDENTITY\" --timestamp=none \"$framework\"\n  fi\ndone\n";
-			showEnvVarsInLog = 0;
-		};
 		9740EEB61CF901F6004384FC /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -353,6 +338,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build";
+		};
+		A1B2C3D4E5F60718293A4B5C /* Re-sign Native Assets */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Re-sign Native Assets";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -z \"${EXPANDED_CODE_SIGN_IDENTITY}\" ] || [ \"${CODE_SIGNING_REQUIRED}\" = \"NO\" ]; then\n  exit 0\nfi\n\nFRAMEWORKS_DIR=\"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\nif [ ! -d \"$FRAMEWORKS_DIR\" ]; then\n  exit 0\nfi\n\nfind \"$FRAMEWORKS_DIR\" -maxdepth 1 -type d -name '*.framework' | while IFS= read -r framework; do\n  if /usr/bin/codesign -dv --verbose=2 \"$framework\" 2>&1 | /usr/bin/grep -q 'Identifier=io.flutter.flutter.native-assets.'; then\n    /usr/bin/codesign --force --sign \"$EXPANDED_CODE_SIGN_IDENTITY\" --timestamp=none \"$framework\"\n  fi\ndone\n";
+			showEnvVarsInLog = 0;
 		};
 		AA0B76E5F1D1205D9C4CE7E9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

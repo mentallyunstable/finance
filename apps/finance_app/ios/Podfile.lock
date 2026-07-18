@@ -47,7 +47,7 @@ SPEC CHECKSUMS:
   permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
   shared_preferences_foundation: 7036424c3d8ec98dfe75ff1667cb0cd531ec82bb
   url_launcher_ios: 7a95fa5b60cc718a708b8f2966718e93db0cef1b
-  voice_ios: 41169ba44579b20517f41e039f9dfcbb65bae798
+  voice_ios: aa3d74a8a2c177886840f22ccf5cd92ca188b29e
 
 PODFILE CHECKSUM: 05ace6390a12e6359e50d950a767c67511f58757
 
