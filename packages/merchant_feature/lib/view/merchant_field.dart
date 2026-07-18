@@ -96,6 +96,7 @@ final class MerchantFieldState extends State<MerchantField> {
           },
           onSelected: _selectSuggestedMerchant,
           fieldViewBuilder: (context, controller, focusNode, _) {
+            final selectedMerchant = _selectedMerchant;
             return TextField(
               key: widget.textFieldKey,
               controller: controller,
@@ -103,10 +104,20 @@ final class MerchantFieldState extends State<MerchantField> {
               onChanged: _onTextEdited,
               onSubmitted: _submit,
               textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: 'Merchant Name',
                 filled: false,
-                contentPadding: EdgeInsets.symmetric(vertical: 14),
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.only(right: 12),
+                  child: MerchantIcon(
+                    iconId: selectedMerchant?.iconId,
+                    repository: context.read<MerchantIconRepository>(),
+                    size: 24,
+                    color: selectedMerchant?.iconId == null ? ColorScheme.of(context).primary : null,
+                  ),
+                ),
+                prefixIconConstraints: const BoxConstraints(minWidth: 36, minHeight: 24),
+                contentPadding: const EdgeInsets.symmetric(vertical: 14),
                 border: InputBorder.none,
                 enabledBorder: InputBorder.none,
                 focusedBorder: InputBorder.none,

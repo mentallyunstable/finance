@@ -178,25 +178,14 @@ class _CreateTransactionScreenState extends State<CreateTransactionScreen> {
                             const Divider(height: 1, indent: 20, endIndent: 20),
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-                              child: Row(
-                                spacing: 12,
-                                children: [
-                                  Icon(
-                                    Icons.storefront_outlined,
-                                    color: ColorScheme.of(context).primary,
-                                  ),
-                                  Expanded(
-                                    child: MerchantField(
-                                      key: _merchantFieldKey,
-                                      controller: _merchantController,
-                                      textFieldKey: const Key('merchant-text-field'),
-                                      onChanged: (merchant) {
-                                        setState(() => _selectedMerchant = merchant);
-                                      },
-                                      onAddRequested: (name) => widget.onAddMerchant(context, name),
-                                    ),
-                                  ),
-                                ],
+                              child: MerchantField(
+                                key: _merchantFieldKey,
+                                controller: _merchantController,
+                                textFieldKey: const Key('merchant-text-field'),
+                                onChanged: (merchant) {
+                                  setState(() => _selectedMerchant = merchant);
+                                },
+                                onAddRequested: (name) => widget.onAddMerchant(context, name),
                               ),
                             ),
                             const Divider(height: 1, indent: 20, endIndent: 20),
