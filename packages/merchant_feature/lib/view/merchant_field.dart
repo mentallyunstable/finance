@@ -36,8 +36,20 @@ final class MerchantFieldState extends State<MerchantField> {
   bool _isAdding = false;
 
   @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_onFocusChanged);
+  }
+
+  @override
   void dispose() {
     _toastTimer?.cancel();
+    _isAdding = true;
+    if (_isToastVisible) {
+      _isToastVisible = false;
+      _toastService.fToast.removeCustomToast();
+    }
+    _focusNode.removeListener(_onFocusChanged);
     _focusNode.dispose();
     super.dispose();
   }
@@ -189,6 +201,20 @@ final class MerchantFieldState extends State<MerchantField> {
     }
   }
 
+  void _onFocusChanged() {
+    if (!_focusNode.hasFocus || widget.controller.text.isNotEmpty) {
+      return;
+    }
+
+    final value = widget.controller.value;
+    final affinity = value.selection.affinity == TextAffinity.downstream
+        ? TextAffinity.upstream
+        : TextAffinity.downstream;
+    widget.controller.value = value.copyWith(
+      selection: TextSelection.collapsed(offset: 0, affinity: affinity),
+    );
+  }
+
   void _submit(String value) {
     final name = value.trim();
     if (name.isEmpty) {
@@ -235,7 +261,9 @@ final class MerchantFieldState extends State<MerchantField> {
       }
       _selectMerchant(merchant);
     } finally {
-      _isAdding = false;
+      if (mounted) {
+        _isAdding = false;
+      }
     }
   }
 

@@ -103,18 +103,20 @@ final class _MerchantIconPickerState extends State<MerchantIconPicker> {
 
   void _onSearchChanged(String value) {
     _debounce?.cancel();
+    final requestId = ++_requestId;
     final query = value.trim();
     if (query.isEmpty) {
-      _requestId++;
       setState(() => _results = const []);
       return;
     }
 
-    _debounce = Timer(const Duration(milliseconds: 350), () => _search(query));
+    _debounce = Timer(
+      const Duration(milliseconds: 350),
+      () => _search(query, requestId),
+    );
   }
 
-  Future<void> _search(String query) async {
-    final requestId = ++_requestId;
+  Future<void> _search(String query, int requestId) async {
     try {
       final results = await context.read<MerchantIconRepository>().search(query);
       if (!mounted || requestId != _requestId) {
