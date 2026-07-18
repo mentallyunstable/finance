@@ -15,6 +15,9 @@
 # Optional local editor settings
 # .vscode/
 
+# Local Git worktrees
+.worktrees/
+
 # Dart and Flutter generated files
 .dart_tool/
 .flutter-plugins
