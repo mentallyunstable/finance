@@ -1,5 +1,5 @@
+import 'package:category_feature/data/default_categories_data.dart';
 import 'package:flutter/material.dart';
-import 'package:transaction_feature/data/category_data.dart';
 import 'package:transaction_feature/domain/entity/transaction_entity.dart';
 
 final class TransactionListItem extends StatelessWidget {
@@ -12,7 +12,8 @@ final class TransactionListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final category = CategoryData.mockData.firstWhere((c) => c.id == transaction.categoryId);
+    final category = defaultCategoriesData.firstWhere((c) => c.id == transaction.categoryId);
+    final formattedTime = _formatTime(transaction.date);
 
     return ListTile(
       minTileHeight: 80,
@@ -32,7 +33,7 @@ final class TransactionListItem extends StatelessWidget {
         children: [
           Text(transaction.title, style: TextTheme.of(context).titleSmall),
           Text(
-            '${category.title} • ${transaction.date.hour}:${transaction.date.minute}',
+            '${category.name} • $formattedTime',
             style: TextTheme.of(context).bodySmall,
           ),
         ],
@@ -42,5 +43,12 @@ final class TransactionListItem extends StatelessWidget {
         style: TextTheme.of(context).bodyLarge,
       ),
     );
+  }
+
+  String _formatTime(final DateTime date) {
+    final hour = date.hour.toString().padLeft(2, '0');
+    final minute = date.minute.toString().padLeft(2, '0');
+
+    return '$hour:$minute';
   }
 }

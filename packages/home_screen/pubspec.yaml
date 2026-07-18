@@ -14,8 +14,10 @@ dependencies:
     sdk: flutter
 
   fl_chart: ^1.2.0
+  flutter_bloc: ^9.1.1
 
   core: any
+  category_feature: any
   design_system: any
   transaction_feature: any
 

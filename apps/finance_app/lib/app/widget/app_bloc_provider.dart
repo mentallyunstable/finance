@@ -1,4 +1,4 @@
-import 'package:finance_app/app/dependencies/extensions/context_extension.dart';
+import 'package:category_feature/bloc/category_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:transaction_feature/bloc/transaction_bloc.dart';
@@ -10,13 +10,11 @@ final class AppBlocProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final repositories = context.repositories;
-
     // TODO: implement MultiBlocProvider
     return MultiBlocProvider(
       providers: [
-        // TransactionBlocProvider(),
         BlocProvider(create: (context) => TransactionBloc()),
+        BlocProvider(create: (context) => CategoryBloc()),
       ],
       child: child,
     );

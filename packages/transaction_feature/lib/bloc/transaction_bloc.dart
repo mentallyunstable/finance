@@ -4,7 +4,7 @@ import 'package:core/utils/logger.dart';
 import 'package:core/utils/try_catcher/bloc_try_catcher_mixin.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:transaction_feature/bloc/transaction_bloc_state_data.dart';
-import 'package:transaction_feature/domain/entity/transaction_entity.dart';
+import 'package:transaction_feature/data/transaction_dto.dart';
 
 part 'transaction_bloc_event.dart';
 part 'transaction_bloc_state.dart';
@@ -23,7 +23,7 @@ final class TransactionBloc extends Bloc<TransactionBlocEvent, TransactionBlocSt
     final Emitter<TransactionBlocState> emit,
   ) async {
     try {
-      final transaction = TransactionEntity(
+      final transaction = TransactionDto(
         amount: event.amount,
         title: event.title,
         categoryId: event.categoryId,
@@ -34,7 +34,7 @@ final class TransactionBloc extends Bloc<TransactionBlocEvent, TransactionBlocSt
 
       final data = state.data;
       emit(
-        TransactionBlocState.initial(
+        TransactionBlocState.created(
           data: data.copyWith(
             transactions: [transaction, ...data.transactions],
           ),

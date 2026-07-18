@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:design_system/components/buttons/gradient_decoration_button.dart';
 import 'package:flutter/material.dart';
 
 final class VoiceRecognitionIconButton extends StatefulWidget {
@@ -62,39 +63,12 @@ final class _VoiceRecognitionIconButtonState extends State<VoiceRecognitionIconB
       dimension: 80,
       child: AnimatedBuilder(
         animation: _pulseController,
-        child: Material(
-          color: Colors.transparent,
-          shape: const RoundedRectangleBorder(borderRadius: .all(.circular(36))),
-          clipBehavior: .antiAlias,
-          child: Ink(
-            decoration: const BoxDecoration(
-              shape: .circle,
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFF003D9B),
-                  Color(0xFF0052CC),
-                ],
-              ),
-            ),
-            child: InkWell(
-              onTap: widget.onPressed,
-              overlayColor: WidgetStateColor.resolveWith((states) {
-                if (states.contains(WidgetState.pressed)) {
-                  return colorScheme.onPrimary.withValues(alpha: 0.16);
-                }
-
-                if (states.contains(WidgetState.hovered) || states.contains(WidgetState.focused)) {
-                  return colorScheme.onPrimary.withValues(alpha: 0.08);
-                }
-
-                return Colors.transparent;
-              }),
-              child: Icon(
-                widget.isListening ? Icons.mic_rounded : Icons.mic_none_rounded,
-                size: 32,
-                color: colorScheme.onPrimary,
-              ),
-            ),
+        child: GradientDecorationButton(
+          onPressed: widget.onPressed,
+          child: Icon(
+            widget.isListening ? Icons.mic_rounded : Icons.mic_none_rounded,
+            size: 32,
+            color: colorScheme.onPrimary,
           ),
         ),
         builder: (context, child) {

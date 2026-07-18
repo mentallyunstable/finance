@@ -13,6 +13,10 @@ sealed class TransactionBlocState {
     required final BaseTransactionBlocStateData data,
     required final String message,
   }) = ErrorCreateTransactionBlocState;
+
+  const factory TransactionBlocState.created({
+    required final BaseTransactionBlocStateData data,
+  }) = CreatedTransactionBlocState;
 }
 
 final class InitialCreateTransactionBlocState extends TransactionBlocState {
@@ -26,4 +30,8 @@ final class ErrorCreateTransactionBlocState extends TransactionBlocState {
     required super.data,
     required this.message,
   });
+}
+
+final class CreatedTransactionBlocState extends TransactionBlocState {
+  const CreatedTransactionBlocState({required super.data});
 }

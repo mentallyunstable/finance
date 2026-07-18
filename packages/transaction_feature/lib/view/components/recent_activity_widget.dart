@@ -7,6 +7,8 @@ import 'package:transaction_feature/view/components/transaction_list_item.dart';
 import 'package:transaction_feature/view/components/transactions_preview_theme.dart';
 
 final class RecentActivityWidget extends StatelessWidget {
+  final Key? latestTransactionKey;
+
   @Preview(
     group: 'Transactions',
     name: 'RecentActivityWidget',
@@ -19,7 +21,7 @@ final class RecentActivityWidget extends StatelessWidget {
     theme: transactionPreviewTheme,
     brightness: Brightness.dark,
   )
-  const RecentActivityWidget({super.key});
+  const RecentActivityWidget({super.key, this.latestTransactionKey});
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +68,10 @@ final class RecentActivityWidget extends StatelessWidget {
                   style: TextTheme.of(context).labelSmall,
                 ),
                 const SizedBox(height: 16),
-                _buildSection(todayTransactions),
+                _buildSection(
+                  todayTransactions,
+                  identifyFirstTransaction: true,
+                ),
               ],
               if (yesterdayTransactions.isNotEmpty) ...[
                 const SizedBox(height: 24),
@@ -84,14 +89,20 @@ final class RecentActivityWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildSection(final List<TransactionEntity> transactions) {
+  Widget _buildSection(
+    final List<TransactionEntity> transactions, {
+    final bool identifyFirstTransaction = false,
+  }) {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.zero,
       itemCount: transactions.length,
       separatorBuilder: (_, _) => const SizedBox(height: 12),
-      itemBuilder: (context, index) => TransactionListItem(transaction: transactions[index]),
+      itemBuilder: (context, index) => TransactionListItem(
+        key: identifyFirstTransaction && index == 0 ? latestTransactionKey : null,
+        transaction: transactions[index],
+      ),
     );
   }
 }

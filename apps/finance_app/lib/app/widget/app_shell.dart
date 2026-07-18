@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:design_system/design_system.dart';
+import 'package:finance_app/app/dependencies/extensions/context_extension.dart';
 import 'package:finance_app/shared/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -70,8 +72,47 @@ final class AppShell extends StatelessWidget {
     );
   }
 
-  void _goToTransactionCreation(final BuildContext context) {
-    GoRouter.of(context).pushCreateTransactionScreen();
+  Future<void> _goToTransactionCreation(final BuildContext context) async {
+    final wasCreated = await GoRouter.of(context).pushCreateTransactionScreen<bool>();
+
+    if (wasCreated != true || !context.mounted) {
+      return;
+    }
+
+    shell.goBranch(0);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!context.mounted) {
+        return;
+      }
+
+      final colorScheme = ColorScheme.of(context);
+      final isDark = colorScheme.brightness == Brightness.dark;
+
+      context.services.toastService.showToast(
+        context: context,
+        color: isDark ? AppColors.successContainerDark : AppColors.successContainer,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.check_circle_rounded,
+              color: isDark ? AppColors.successAccentDark : AppColors.successAccent,
+            ),
+            const SizedBox(width: 12),
+            Flexible(
+              child: Text(
+                'Transaction created',
+                style: TextTheme.of(context).bodyMedium?.copyWith(
+                  color: isDark ? AppColors.successAccentDark : AppColors.successAccent,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
 

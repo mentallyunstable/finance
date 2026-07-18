@@ -20,6 +20,7 @@ workspace:
   - packages/voice_plugin
   - packages/voice_recognition_feature
   - packages/transaction_feature
+  - packages/category_feature
 
 melos:
   name: finance
