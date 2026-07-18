@@ -20,6 +20,7 @@ final class _AddMerchantScreenState extends State<AddMerchantScreen> {
   final _descriptionController = TextEditingController();
   final Set<String> _selectedCategoryIds = {};
   String? _selectedIconId;
+  bool _isSaving = false;
 
   @override
   void initState() {
@@ -44,7 +45,7 @@ final class _AddMerchantScreenState extends State<AddMerchantScreen> {
           actions: [
             IconButton(
               tooltip: 'Save merchant',
-              onPressed: _save,
+              onPressed: _isSaving ? null : _save,
               icon: const Icon(Icons.check_rounded),
             ),
           ],
@@ -119,6 +120,7 @@ final class _AddMerchantScreenState extends State<AddMerchantScreen> {
       return;
     }
 
+    setState(() => _isSaving = true);
     context.read<MerchantBloc>().add(
       MerchantBlocEvent.create(
         name: _nameController.text,
@@ -142,6 +144,7 @@ final class _AddMerchantScreenState extends State<AddMerchantScreen> {
         return;
       }
 
+      setState(() => _isSaving = false);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(state.message)),
       );

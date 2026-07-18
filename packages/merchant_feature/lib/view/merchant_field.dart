@@ -34,11 +34,24 @@ final class MerchantFieldState extends State<MerchantField> {
   MerchantData? _selectedMerchant;
   bool _isToastVisible = false;
   bool _isAdding = false;
+  bool _isUpdatingController = false;
+  bool _isRefreshingOptions = false;
 
   @override
   void initState() {
     super.initState();
     _focusNode.addListener(_onFocusChanged);
+    widget.controller.addListener(_onControllerChanged);
+  }
+
+  @override
+  void didUpdateWidget(covariant MerchantField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller.removeListener(_onControllerChanged);
+      widget.controller.addListener(_onControllerChanged);
+      _onControllerChanged();
+    }
   }
 
   @override
@@ -49,6 +62,7 @@ final class MerchantFieldState extends State<MerchantField> {
       _isToastVisible = false;
       _toastService.fToast.removeCustomToast();
     }
+    widget.controller.removeListener(_onControllerChanged);
     _focusNode.removeListener(_onFocusChanged);
     _focusNode.dispose();
     super.dispose();
@@ -70,13 +84,13 @@ final class MerchantFieldState extends State<MerchantField> {
             );
           },
           onSelected: _selectMerchant,
-          fieldViewBuilder: (context, controller, focusNode, _) {
+          fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) {
             return TextField(
               key: widget.textFieldKey,
               controller: controller,
               focusNode: focusNode,
               onChanged: _onTextEdited,
-              onSubmitted: _submit,
+              onSubmitted: (value) => _submit(value, onFieldSubmitted),
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(
                 hintText: 'Merchant Name',
@@ -106,26 +120,30 @@ final class MerchantFieldState extends State<MerchantField> {
                     itemCount: merchants.length,
                     itemBuilder: (context, index) {
                       final merchant = merchants[index];
-                      return InkWell(
-                        onTap: () => onSelected(merchant),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: Row(
-                            children: [
-                              MerchantIcon(
-                                iconId: merchant.iconId,
-                                repository: context.read<MerchantIconRepository>(),
-                                size: 24,
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Text(
-                                  merchant.name,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                      final isHighlighted = AutocompleteHighlightedOption.of(context) == index;
+                      return ColoredBox(
+                        color: isHighlighted ? ColorScheme.of(context).secondaryContainer : Colors.transparent,
+                        child: InkWell(
+                          onTap: () => onSelected(merchant),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Row(
+                              children: [
+                                MerchantIcon(
+                                  iconId: merchant.iconId,
+                                  repository: context.read<MerchantIconRepository>(),
+                                  size: 24,
                                 ),
-                              ),
-                            ],
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Text(
+                                    merchant.name,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -207,15 +225,43 @@ final class MerchantFieldState extends State<MerchantField> {
     }
 
     final value = widget.controller.value;
-    final affinity = value.selection.affinity == TextAffinity.downstream
-        ? TextAffinity.upstream
-        : TextAffinity.downstream;
-    widget.controller.value = value.copyWith(
-      selection: TextSelection.collapsed(offset: 0, affinity: affinity),
-    );
+    // RawAutocomplete recomputes options only after a controller text change.
+    _isRefreshingOptions = true;
+    try {
+      widget.controller.value = const TextEditingValue(
+        text: ' ',
+        selection: TextSelection.collapsed(offset: 1),
+      );
+      widget.controller.value = value;
+    } finally {
+      _isRefreshingOptions = false;
+    }
   }
 
-  void _submit(String value) {
+  void _onControllerChanged() {
+    if (_isUpdatingController || _isRefreshingOptions) {
+      return;
+    }
+
+    final selectedMerchant = _selectedMerchant;
+    if (selectedMerchant == null || widget.controller.text == selectedMerchant.name) {
+      return;
+    }
+
+    scheduleMicrotask(() {
+      if (!mounted ||
+          _isUpdatingController ||
+          _isRefreshingOptions ||
+          !identical(_selectedMerchant, selectedMerchant) ||
+          widget.controller.text == selectedMerchant.name) {
+        return;
+      }
+      _selectedMerchant = null;
+      widget.onChanged(null);
+    });
+  }
+
+  void _submit(String value, VoidCallback onFieldSubmitted) {
     final name = value.trim();
     if (name.isEmpty) {
       return;
@@ -223,7 +269,10 @@ final class MerchantFieldState extends State<MerchantField> {
 
     final exactMerchant = _findExactMerchant(name);
     if (exactMerchant != null) {
-      _selectMerchant(exactMerchant);
+      onFieldSubmitted();
+      if (!identical(_selectedMerchant, exactMerchant)) {
+        _selectMerchant(exactMerchant);
+      }
       return;
     }
 
@@ -242,10 +291,15 @@ final class MerchantFieldState extends State<MerchantField> {
 
   void _selectMerchant(MerchantData merchant) {
     _selectedMerchant = merchant;
-    widget.controller.value = TextEditingValue(
-      text: merchant.name,
-      selection: TextSelection.collapsed(offset: merchant.name.length),
-    );
+    _isUpdatingController = true;
+    try {
+      widget.controller.value = TextEditingValue(
+        text: merchant.name,
+        selection: TextSelection.collapsed(offset: merchant.name.length),
+      );
+    } finally {
+      _isUpdatingController = false;
+    }
     widget.onChanged(merchant);
   }
 
@@ -260,6 +314,13 @@ final class MerchantFieldState extends State<MerchantField> {
         return;
       }
       _selectMerchant(merchant);
+    } catch (_) {
+      if (!mounted) {
+        return;
+      }
+      ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+        const SnackBar(content: Text('Could not add merchant. Try again.')),
+      );
     } finally {
       if (mounted) {
         _isAdding = false;
