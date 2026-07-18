@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:core/utils/logger.dart';
 import 'package:core/utils/try_catcher/bloc_try_catcher_mixin.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:transaction_feature/bloc/transaction_bloc_state_data.dart';
@@ -21,8 +20,8 @@ final class TransactionBloc extends Bloc<TransactionBlocEvent, TransactionBlocSt
   FutureOr<void> _onCreateTransactionEvent(
     final CreateTransactionEvent event,
     final Emitter<TransactionBlocState> emit,
-  ) async {
-    try {
+  ) {
+    return tryCatch(event, emit, () async {
       final transaction = TransactionDto(
         amount: event.amount,
         title: event.title,
@@ -40,13 +39,7 @@ final class TransactionBloc extends Bloc<TransactionBlocEvent, TransactionBlocSt
           ),
         ),
       );
-    } catch (exception, stackTrace) {
-      logger.error(
-        'Error CreateTransactionBloc InitCreateTransactionEvent',
-        exception: exception,
-        stackTrace: stackTrace,
-      );
-    }
+    });
   }
 
   @override

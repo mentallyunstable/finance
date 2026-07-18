@@ -38,7 +38,6 @@ final class MerchantFieldState extends State<MerchantField> {
   bool _isUpdatingInternalController = false;
   bool _isUpdatingExternalController = false;
   bool _isRefreshingOptions = false;
-  int _selectionRevision = 0;
   int _selectionCheckRevision = 0;
 
   @override
@@ -96,13 +95,13 @@ final class MerchantFieldState extends State<MerchantField> {
             );
           },
           onSelected: _selectMerchant,
-          fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) {
+          fieldViewBuilder: (context, controller, focusNode, _) {
             return TextField(
               key: widget.textFieldKey,
               controller: controller,
               focusNode: focusNode,
               onChanged: _onTextEdited,
-              onSubmitted: (value) => _submit(value, onFieldSubmitted),
+              onSubmitted: _submit,
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(
                 hintText: 'Merchant Name',
@@ -284,14 +283,8 @@ final class MerchantFieldState extends State<MerchantField> {
     });
   }
 
-  void _submit(String value, VoidCallback onFieldSubmitted) {
-    final selectionRevision = _selectionRevision;
-    onFieldSubmitted();
-    if (_selectionRevision != selectionRevision) {
-      return;
-    }
-
-    final name = _autocompleteController.text.trim();
+  void _submit(String value) {
+    final name = value.trim();
     if (name.isEmpty) {
       return;
     }
@@ -319,7 +312,6 @@ final class MerchantFieldState extends State<MerchantField> {
 
   void _selectMerchant(MerchantData merchant) {
     _selectionCheckRevision += 1;
-    _selectionRevision += 1;
     _selectedMerchant = merchant;
     final value = TextEditingValue(
       text: merchant.name,
