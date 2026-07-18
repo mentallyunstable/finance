@@ -14,17 +14,24 @@ final class CategoriesModalSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CategoryBloc, CategoryBlocState>(
-      builder: (context, state) => Wrap(
-        spacing: 16,
-        runSpacing: 16,
-        children: state.data.categories
-            .map(
-              (category) => CategoryItem(
-                category: category,
-                onSelect: (category) => _onSelectCategory(context, category),
-              ),
-            )
-            .toList(),
+      builder: (context, state) => SizedBox(
+        width: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 16,
+            runSpacing: 16,
+            children: state.data.categories
+                .map(
+                  (category) => CategoryItem(
+                    category: category,
+                    onSelect: (category) => _onSelectCategory(context, category),
+                  ),
+                )
+                .toList(),
+          ),
+        ),
       ),
     );
   }

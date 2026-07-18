@@ -13,10 +13,11 @@ class ModalSheetService {
     final bool useWrapper = true,
     final VoidCallback? whenComplete,
     final bool useRootNavigator = true,
+    final bool useSafeArea = true,
   }) async {
     return await showModalBottomSheet(
       context: context,
-      useSafeArea: true,
+      useSafeArea: useSafeArea,
       useRootNavigator: useRootNavigator,
       enableDrag: enabledDrag,
       isScrollControlled: isScrollControlled,

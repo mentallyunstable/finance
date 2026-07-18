@@ -78,7 +78,12 @@ class _CreateTransactionScreenState extends State<CreateTransactionScreen> {
                     isListening: state.data.isListening,
                   ),
                 ),
-                CreateTransactionIconButton(onPressed: _createTransaction),
+                ValueListenableBuilder<String>(
+                  valueListenable: _amountNotifier,
+                  builder: (context, amount, child) => CreateTransactionIconButton(
+                    onPressed: (double.tryParse(amount) ?? 0) == 0 ? null : _createTransaction,
+                  ),
+                ),
               ],
             ),
             appBar: AppBar(
@@ -225,6 +230,8 @@ class _CreateTransactionScreenState extends State<CreateTransactionScreen> {
     const ModalSheetService().showModalSheet(
       context: context,
       content: CategoriesModalSheet(onSelect: _onCategorySelected),
+      useSafeArea: false,
+      useWrapper: false,
     );
   }
 

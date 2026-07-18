@@ -2,7 +2,7 @@ import 'package:design_system/components/buttons/gradient_decoration_button.dart
 import 'package:flutter/material.dart';
 
 final class CreateTransactionIconButton extends StatelessWidget {
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const CreateTransactionIconButton({super.key, required this.onPressed});
 
