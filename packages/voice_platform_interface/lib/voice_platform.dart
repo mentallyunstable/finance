@@ -27,7 +27,7 @@ abstract class VoicePlatform extends PlatformInterface {
 
   /// Start listening for voice input.
   Future<void> startListening({
-    final String locale,
+    final String? locale,
     final bool preferOffline,
   });
 

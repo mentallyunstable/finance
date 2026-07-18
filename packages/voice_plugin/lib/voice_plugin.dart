@@ -2,6 +2,7 @@ library;
 
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:voice_android/voice_android_platform.dart';
 import 'package:voice_ios/voice_ios_platform.dart';
@@ -28,8 +29,16 @@ class VoicePlugin {
   }
 
   /// Start voice recognition
-  Future<void> startListening() {
-    return VoicePlatform.instance.startListening();
+  Future<void> startListening({
+    final String? locale,
+    final bool preferOffline = false,
+  }) {
+    final resolvedLocale = locale ?? ui.PlatformDispatcher.instance.locale.toLanguageTag();
+
+    return VoicePlatform.instance.startListening(
+      locale: resolvedLocale,
+      preferOffline: preferOffline,
+    );
   }
 
   /// Stop voice recognition

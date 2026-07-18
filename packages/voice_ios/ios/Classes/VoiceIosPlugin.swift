@@ -77,7 +77,7 @@ public class VoiceIosPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
         -> SFSpeechRecognizer?
     {
         if let locale {
-            recognizer = SFSpeechRecognizer(locale: locale)
+            recognizer = createRecognizerForRequestedLocale(locale)
         }
 
         if recognizer == nil {
@@ -85,6 +85,32 @@ public class VoiceIosPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
         }
 
         return recognizer
+    }
+
+    private func createRecognizerForRequestedLocale(_ locale: Locale)
+        -> SFSpeechRecognizer?
+    {
+        let supportedLocales = SFSpeechRecognizer.supportedLocales()
+
+        if supportedLocales.contains(where: {
+            $0.identifier.caseInsensitiveCompare(locale.identifier) == .orderedSame
+        }) {
+            return SFSpeechRecognizer(locale: locale)
+        }
+
+        guard let languageCode = locale.languageCode else {
+            return nil
+        }
+
+        let fallbackLocale = supportedLocales.first {
+            $0.languageCode?.caseInsensitiveCompare(languageCode) == .orderedSame
+        }
+
+        guard let fallbackLocale else {
+            return nil
+        }
+
+        return SFSpeechRecognizer(locale: fallbackLocale)
     }
 
     /*
@@ -264,13 +290,26 @@ public class VoiceIosPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
         )
         try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
 
+        let inputNode = audioEngine.inputNode
+        let recordingFormat = inputNode.outputFormat(forBus: 0)
+
+        guard isValidRecordingFormat(recordingFormat) else {
+            try? audioSession.setActive(
+                false,
+                options: .notifyOthersOnDeactivation
+            )
+            throw VoiceIosPluginError.invalidRecordingFormat(
+                sampleRate: recordingFormat.sampleRate,
+                channelCount: recordingFormat.channelCount
+            )
+        }
+
         let request = SFSpeechAudioBufferRecognitionRequest()
         request.shouldReportPartialResults = true
         request.requiresOnDeviceRecognition =
             preferOffline && recognizer.supportsOnDeviceRecognition
         recognitionRequest = request
 
-        let inputNode = audioEngine.inputNode
         inputNode.removeTap(onBus: 0)
 
         recognitionTask = recognizer.recognitionTask(with: request) {
@@ -308,13 +347,18 @@ public class VoiceIosPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
             }
         }
 
-        let recordingFormat = inputNode.outputFormat(forBus: 0)
-        inputNode.installTap(
-            onBus: 0,
+        let tapFailure = VoiceAudioTapInstaller.installTap(
+            on: inputNode,
+            bus: 0,
             bufferSize: 1024,
             format: recordingFormat
         ) { [weak self] buffer, _ in
             self?.recognitionRequest?.append(buffer)
+        }
+
+        if let tapFailure {
+            cleanupRecognition()
+            throw VoiceIosPluginError.audioTapInstallFailed(tapFailure)
         }
 
         audioEngine.prepare()
@@ -365,6 +409,10 @@ public class VoiceIosPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
         audioEngine.inputNode.removeTap(onBus: 0)
     }
 
+    private func isValidRecordingFormat(_ format: AVAudioFormat) -> Bool {
+        format.sampleRate > 0 && format.channelCount > 0
+    }
+
     /*
      Send error to the EventChannel.
      */
@@ -374,5 +422,23 @@ public class VoiceIosPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
             "code": code,
             "message": message,
         ])
+    }
+}
+
+private enum VoiceIosPluginError: LocalizedError {
+    case invalidRecordingFormat(
+        sampleRate: Double,
+        channelCount: AVAudioChannelCount
+    )
+    case audioTapInstallFailed(String)
+
+    var errorDescription: String? {
+        switch self {
+        case let .invalidRecordingFormat(sampleRate, channelCount):
+            return
+                "No valid microphone input format is available. sampleRate=\(sampleRate), channelCount=\(channelCount)"
+        case let .audioTapInstallFailed(message):
+            return "Failed to install microphone recording tap: \(message)"
+        }
     }
 }

@@ -283,9 +283,9 @@ final class _PrimaryBudgetCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Icon(
+                  const Icon(
                     Icons.auto_graph_rounded,
-                    color: const Color(0xFF00714D),
+                    color: Color(0xFF00714D),
                     size: 28,
                   ),
                 ],
@@ -310,20 +310,20 @@ final class _PrimaryBudgetCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 8),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(999),
+              const ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(999)),
                 child: LinearProgressIndicator(
                   value: 0.64,
                   minHeight: 12,
                   backgroundColor: AppColors.surfaceContainer,
-                  valueColor: const AlwaysStoppedAnimation<Color>(
+                  valueColor: AlwaysStoppedAnimation<Color>(
                     AppColors.primary,
                   ),
                 ),
               ),
               const SizedBox(height: 28),
-              Row(
-                children: const [
+              const Row(
+                children: [
                   Expanded(
                     child: _MetricTile(label: 'DAILY LIMIT', value: '\$137.00'),
                   ),
