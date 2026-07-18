@@ -27,7 +27,7 @@ final class TransactionBloc extends Bloc<TransactionBlocEvent, TransactionBlocSt
         amount: event.amount,
         title: event.title,
         categoryId: event.categoryId,
-        merchant: event.merchant,
+        merchantSlug: event.merchantSlug,
         notes: event.notes,
         date: DateTime.now(),
       );

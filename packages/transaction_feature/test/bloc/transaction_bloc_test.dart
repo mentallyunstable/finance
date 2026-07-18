@@ -17,7 +17,7 @@ void main() {
               .having((transaction) => transaction.title, 'title', 'Coffee Shop')
               .having((transaction) => transaction.amount, 'amount', '12.50')
               .having((transaction) => transaction.categoryId, 'categoryId', 'food')
-              .having((transaction) => transaction.merchant, 'merchant', 'Coffee Shop')
+              .having((transaction) => transaction.merchantSlug, 'merchantSlug', 'Coffee Shop')
               .having((transaction) => transaction.notes, 'notes', 'Breakfast'),
         ),
       ),
@@ -28,7 +28,7 @@ void main() {
         title: 'Coffee Shop',
         amount: '12.50',
         categoryId: 'food',
-        merchant: 'Coffee Shop',
+        merchantSlug: 'Coffee Shop',
         notes: 'Breakfast',
       ),
     );

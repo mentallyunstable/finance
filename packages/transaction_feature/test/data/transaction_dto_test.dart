@@ -8,7 +8,7 @@ void main() {
       title: 'Coffee Shop',
       amount: '12.50',
       categoryId: 'food',
-      merchant: 'Coffee Shop',
+      merchantSlug: 'Coffee Shop',
       notes: 'Breakfast',
       date: DateTime(2026, 7, 19, 9, 5),
     );
@@ -17,7 +17,7 @@ void main() {
     expect(transaction.title, 'Coffee Shop');
     expect(transaction.amount, '12.50');
     expect(transaction.categoryId, 'food');
-    expect(transaction.merchant, 'Coffee Shop');
+    expect(transaction.merchantSlug, 'Coffee Shop');
     expect(transaction.notes, 'Breakfast');
     expect(transaction.date, DateTime(2026, 7, 19, 9, 5));
   });
